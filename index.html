@@ -1,0 +1,1748 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teacher Maria Nascimento | Aulas de Inglês</title>
+  <meta name="description" content="Aulas online de inglês para adultos com Método ABC, turmas reduzidas, portal do aluno, acompanhamento de progresso e planos mensais, semestrais e anuais.">
+  <style>
+    :root {
+      --cream: #f8ead0;
+      --cream-2: #fff4dc;
+      --brown: #4a1809;
+      --brown-2: #6f3e22;
+      --caramel: #9d673d;
+      --gold: #f2c078;
+      --ink: #25160f;
+      --white: #fffaf0;
+      --line: rgba(74, 24, 9, .18);
+      --shadow: 0 24px 70px rgba(74, 24, 9, .25);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--cream-2);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+
+    .page {
+      width: 100vw;
+      max-width: none;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      border-radius: 0;
+      background: var(--cream-2);
+      box-shadow: none;
+    }
+
+    header {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      top: 48px;
+      width: calc(100% - 64px);
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--cream-2);
+      font-size: .85rem;
+      font-weight: 750;
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255, 244, 220, .45);
+      border-radius: 50%;
+      color: var(--brown);
+      background: var(--gold);
+      font-weight: 950;
+    }
+
+    nav { display: flex; gap: 26px; }
+    .login-btn {
+      border: 1px solid rgba(255, 244, 220, .45);
+      border-radius: 999px;
+      padding: 10px 18px;
+      color: var(--cream-2);
+      background: rgba(255,255,255,.08);
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 680px;
+      display: grid;
+      place-items: center;
+      padding: 92px 24px;
+      color: var(--cream-2);
+      text-align: center;
+      background:
+        linear-gradient(90deg, rgba(25, 9, 4, .82), rgba(74, 24, 9, .52), rgba(74, 24, 9, .25)),
+        url("school-hero.png") center / cover,
+        linear-gradient(135deg, #2a0c04, #7a4221 55%, #d7a66b);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 78% 62%, rgba(242, 192, 120, .36), transparent 24%),
+        linear-gradient(115deg, transparent 0 50%, rgba(255,255,255,.06) 50% 100%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      max-width: 860px;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--gold);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin-bottom: 18px;
+      font-size: clamp(2.65rem, 7vw, 6.4rem);
+      line-height: .92;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin-bottom: 16px;
+      font-size: clamp(2rem, 4.2vw, 4.3rem);
+      line-height: .95;
+      letter-spacing: 0;
+    }
+    h3 { margin-bottom: 9px; font-size: 1.3rem; }
+    p { line-height: 1.65; }
+
+    .hero p:not(.eyebrow) {
+      max-width: 760px;
+      margin-inline: auto;
+      color: rgba(255, 244, 220, .88);
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .btn {
+      min-height: 44px;
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 19px;
+      color: var(--brown);
+      background: var(--gold);
+      cursor: pointer;
+      font-weight: 850;
+    }
+    .btn.ghost {
+      color: var(--cream-2);
+      background: transparent;
+      border: 1px solid rgba(255, 244, 220, .52);
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      min-height: 520px;
+    }
+    .intro-copy {
+      display: grid;
+      align-content: center;
+      padding: clamp(32px, 6vw, 76px);
+      background: var(--cream-2);
+    }
+    .intro-copy h2 { color: var(--brown-2); font-size: clamp(1.9rem, 3.3vw, 3.6rem); }
+    .intro-copy p { color: #5f4637; }
+
+    .photo-panel {
+      position: relative;
+      min-height: 480px;
+      display: grid;
+      place-items: center;
+      padding: clamp(24px, 5vw, 58px);
+      background:
+        linear-gradient(rgba(74,24,9,.1), rgba(74,24,9,.18)),
+        url("school-hero.png") center / cover,
+        radial-gradient(circle at 50% 38%, #f6d18f 0 18%, transparent 18%),
+        linear-gradient(135deg, #8b552e, #d8a668);
+      overflow: hidden;
+    }
+    .photo-panel img {
+      position: relative;
+      z-index: 1;
+      width: min(410px, 86%);
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center 24%;
+      border: 12px solid rgba(255, 244, 220, .88);
+      border-radius: 18px;
+      box-shadow: 0 26px 60px rgba(37, 22, 15, .34);
+    }
+    .photo-panel::before,
+    .photo-panel::after {
+      content: "";
+      position: absolute;
+      border-radius: 18px;
+      background: rgba(255, 250, 240, .72);
+      box-shadow: 0 18px 36px rgba(74,24,9,.18);
+    }
+    .photo-panel::before {
+      width: 56%;
+      height: 48%;
+      left: 10%;
+      top: 18%;
+      background:
+        linear-gradient(180deg, rgba(74,24,9,.1), rgba(74,24,9,.2)),
+        repeating-linear-gradient(0deg, rgba(74,24,9,.14) 0 2px, transparent 2px 24px),
+        #fff7e4;
+    }
+    .photo-panel::after {
+      width: 42%;
+      height: 34%;
+      right: 9%;
+      bottom: 16%;
+      background:
+        radial-gradient(circle at 32% 36%, #4a1809 0 8%, transparent 8%),
+        radial-gradient(circle at 68% 58%, #f2c078 0 11%, transparent 11%),
+        linear-gradient(135deg, #fff7e4, #d8a668);
+    }
+
+    .story {
+      padding: clamp(48px, 7vw, 86px) clamp(24px, 7vw, 96px);
+      color: var(--cream-2);
+      background: var(--brown);
+      text-align: center;
+    }
+    .story p { max-width: 760px; margin-inline: auto; color: rgba(255,244,220,.82); }
+
+    .info-section {
+      padding: clamp(52px, 7vw, 92px) clamp(18px, 5vw, 72px);
+      background: var(--cream-2);
+    }
+    .info-section.alt { background: var(--cream); }
+    .info-heading {
+      max-width: 900px;
+      margin: 0 auto 28px;
+      text-align: center;
+    }
+    .info-heading h2 { color: var(--brown); }
+    .info-heading p { color: #684938; }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .info-card {
+      min-height: 230px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff9ea;
+      box-shadow: 0 14px 34px rgba(74,24,9,.08);
+    }
+    .info-card span {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      color: var(--brown);
+      background: var(--gold);
+      font-weight: 950;
+    }
+    .info-card p { color: #684938; }
+
+    .faq {
+      padding: clamp(52px, 7vw, 92px) clamp(18px, 5vw, 72px);
+      background: var(--cream-2);
+    }
+    .faq-list {
+      display: grid;
+      gap: 12px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    details {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff9ea;
+    }
+    summary {
+      cursor: pointer;
+      padding: 18px 20px;
+      color: var(--brown);
+      font-weight: 900;
+    }
+    details p {
+      margin: 0;
+      padding: 0 20px 20px;
+      color: #684938;
+    }
+
+    .mosaic {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-top: 34px;
+    }
+    .tile {
+      min-height: 170px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, #d6a160, #fff2d3);
+      border: 1px solid rgba(255,244,220,.16);
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 18%;
+    }
+    .tile:nth-child(1) { grid-column: span 2; background: linear-gradient(135deg, #2c1208, #9a6135); }
+    .tile:nth-child(2) { grid-column: span 2; background: repeating-linear-gradient(90deg, #fff0ca 0 24px, #e3ba7a 24px 48px); }
+    .tile:nth-child(3) { grid-column: span 2; background: radial-gradient(circle at 50% 46%, #fff8e7 0 18%, transparent 19%), #8a4d29; }
+    .tile:nth-child(4) { grid-column: span 3; background: linear-gradient(135deg, #f8ead0, #b47542); }
+    .tile:nth-child(5) { grid-column: span 3; background: linear-gradient(135deg, #381206, #d49b5b); }
+
+    .craft {
+      padding: clamp(50px, 7vw, 92px) clamp(24px, 7vw, 96px);
+      background: var(--caramel);
+      color: var(--cream-2);
+      text-align: center;
+    }
+    .craft-header {
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+    .craft-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 32px;
+    }
+    .craft-card {
+      min-height: 300px;
+      display: grid;
+      align-content: end;
+      padding: 20px;
+      border-radius: 4px;
+      background: linear-gradient(160deg, rgba(74,24,9,.12), rgba(74,24,9,.78)), #d9ad75;
+      color: var(--cream-2);
+    }
+    .craft-card:nth-child(2) { background-color: #f0c583; }
+    .craft-card:nth-child(3) { background-color: #673017; }
+    .craft-card small { color: rgba(255,244,220,.78); }
+
+    .pricing {
+      padding: clamp(52px, 7vw, 96px) clamp(18px, 5vw, 72px);
+      background: var(--cream-2);
+    }
+    .pricing-heading {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(280px, .65fr);
+      gap: clamp(24px, 5vw, 70px);
+      align-items: end;
+      margin-bottom: 28px;
+    }
+    .pricing-heading h2 { color: var(--brown); }
+    .pricing-heading p { color: #684938; }
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .price-card {
+      position: relative;
+      display: grid;
+      gap: 16px;
+      min-height: 360px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff9ea;
+      box-shadow: 0 14px 34px rgba(74,24,9,.09);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease, color .18s ease, box-shadow .18s ease;
+    }
+    .price-card:hover,
+    .price-card:focus-within {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 44px rgba(74,24,9,.16);
+    }
+    .price-card.selected {
+      color: var(--cream-2);
+      background: var(--brown);
+      transform: translateY(-10px);
+    }
+    .price-card h3 {
+      font-size: 1.8rem;
+      color: inherit;
+    }
+    .price {
+      display: block;
+      color: var(--brown);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
+      font-weight: 950;
+    }
+    .selected .price { color: var(--gold); }
+    .price-card p,
+    .price-card li { color: #654838; }
+    .selected p,
+    .selected li { color: rgba(255,244,220,.84); }
+    .price-card ul {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding-left: 18px;
+    }
+    .badge {
+      width: fit-content;
+      border-radius: 999px;
+      padding: 7px 12px;
+      color: var(--brown);
+      background: var(--gold);
+      font-size: .78rem;
+      font-weight: 950;
+    }
+    .price-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: auto;
+    }
+    .price-meta span {
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(74,24,9,.08);
+      font-weight: 850;
+    }
+    .selected .price-meta span { background: rgba(255,244,220,.12); }
+    .savings {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .saving-card {
+      padding: 18px;
+      border-radius: 16px;
+      color: var(--cream-2);
+      background: var(--caramel);
+    }
+    .saving-card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--gold);
+      font-size: 1.3rem;
+    }
+
+    .method-flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+      text-align: left;
+    }
+    .method-step {
+      padding: 18px;
+      border: 1px solid rgba(255,244,220,.22);
+      border-radius: 14px;
+      background: rgba(255,244,220,.08);
+    }
+    .method-step strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-size: 1.15rem;
+    }
+    .method-note {
+      max-width: 900px;
+      margin: 22px auto 0;
+      color: rgba(255,244,220,.86);
+      font-weight: 700;
+    }
+    .bonus { color: #3d7a2f; font-weight: 900; }
+    .no-bonus { color: #9a321d; font-weight: 900; }
+    .selected .bonus,
+    .selected .no-bonus { color: var(--gold); }
+
+    .portal {
+      padding: clamp(52px, 7vw, 92px) clamp(18px, 5vw, 72px);
+      background: var(--cream);
+    }
+    .portal-heading { text-align: center; max-width: 820px; margin: 0 auto 28px; }
+    .portal-heading h2 { color: var(--brown); }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      width: 100%;
+      max-width: none;
+      margin: auto;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 48px rgba(74,24,9,.16);
+      text-align: left;
+    }
+    .sidebar {
+      padding: 18px;
+      background: #5a210f;
+      color: var(--cream-2);
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      color: var(--brown);
+      background: var(--gold);
+      font-weight: 950;
+    }
+    .profile small { display: block; color: rgba(255,244,220,.72); }
+    .tab {
+      width: 100%;
+      min-height: 42px;
+      margin-bottom: 8px;
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      text-align: left;
+      color: rgba(255,244,220,.76);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .tab.active { color: var(--brown); background: var(--gold); }
+
+    .panel-area { padding: clamp(22px, 4vw, 40px); }
+    .panel-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 22px;
+    }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .mini-card, .homework-card, .feedback, .contract, .billing, .resource {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      background: #fff9ea;
+    }
+    .mini-card {
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      min-height: 170px;
+    }
+    .mini-card strong { display: block; margin-top: 8px; color: var(--brown); font-size: 1.2rem; }
+    .mini-card p { margin: 0; color: #684938; font-size: .92rem; }
+    .mini-card.success { border-color: rgba(58, 125, 68, .35); background: #f0faec; }
+    .mini-card.warning { border-color: rgba(190, 128, 35, .35); background: #fff6dd; }
+    .mini-card.danger { border-color: rgba(160, 56, 36, .35); background: #fff0e9; }
+    .mini-card.info { border-color: rgba(74, 24, 9, .22); background: #fff9ea; }
+    .status-pill {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .74rem;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    .status-pill.good { color: #245d2d; background: #dff2d9; }
+    .status-pill.waiting { color: #80540f; background: #ffe7ae; }
+    .status-pill.bad { color: #8f2b18; background: #ffd7ca; }
+    .status-pill.neutral { color: var(--brown); background: var(--gold); }
+    .timeline { display: grid; gap: 12px; }
+    .timeline p {
+      margin: 0;
+      padding: 14px 16px;
+      border-left: 5px solid var(--gold);
+      background: #fff9ea;
+      border-radius: 8px;
+    }
+    .timeline strong { color: var(--brown); }
+    .homework-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+      margin: 12px 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fffdf6;
+    }
+    .resource-list { display: grid; gap: 12px; }
+    .resource { display: grid; grid-template-columns: 42px 1fr auto; align-items: center; gap: 12px; }
+    .resource-detail {
+      margin-top: 16px;
+      border: 1px solid rgba(74, 24, 9, .18);
+      border-radius: 14px;
+      padding: 18px;
+      background: #fffdf6;
+    }
+    .resource-detail h3 { margin: 6px 0 8px; color: var(--brown); }
+    .resource-detail p { margin: 0; color: #684938; line-height: 1.65; }
+    .resource-detail ul { margin: 12px 0 0; padding-left: 20px; color: #684938; }
+    .play {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      color: var(--brown);
+      background: var(--gold);
+      font-weight: 950;
+    }
+    .slots {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .slot {
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff9ea;
+      cursor: pointer;
+      font-weight: 850;
+    }
+    .slot.selected { color: var(--cream-2); background: var(--brown); }
+    .status { color: #6c4c38; }
+    .schedule-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: .55;
+    }
+    .contract.success { border-color: rgba(58, 125, 68, .35); background: #f0faec; }
+    .billing { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+    .billing.danger { border-color: rgba(160, 56, 36, .35); background: #fff0e9; }
+    .billing.success { border-color: rgba(58, 125, 68, .35); background: #f0faec; }
+    .billing strong { display: block; color: #a24d18; font-size: 1.8rem; }
+
+    .abc-panel-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff9ea;
+    }
+    .abc-panel-intro p { margin: 0; color: #684938; }
+    .abc-progress {
+      min-width: 120px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: #245d2d;
+      background: #dff2d9;
+      text-align: center;
+      font-weight: 950;
+    }
+    .abc-toolbar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fffdf6;
+    }
+    .abc-toolbar span {
+      color: #684938;
+      font-weight: 850;
+    }
+    .abc-toolbar button {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 13px;
+      color: var(--brown);
+      background: #fff9ea;
+      cursor: pointer;
+      font-weight: 850;
+    }
+    .abc-toolbar button:disabled {
+      cursor: not-allowed;
+      opacity: .45;
+    }
+    .abc-toolbar button:not(:disabled):hover,
+    .abc-toolbar button:not(:disabled):focus-visible {
+      color: var(--cream-2);
+      background: var(--brown);
+      outline: none;
+    }
+    .abc-board {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .abc-column {
+      min-width: 240px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fffdf6;
+    }
+    .abc-column h4 {
+      margin: 0 0 14px;
+      color: var(--brown);
+      font-size: 1.15rem;
+    }
+    .abc-column[data-stage="a"] { border-color: rgba(58, 125, 68, .34); }
+    .abc-column[data-stage="b"] { border-color: rgba(190, 128, 35, .34); }
+    .abc-column[data-stage="c"] { border-color: rgba(160, 56, 36, .28); }
+    .abc-list {
+      display: grid;
+      gap: 10px;
+      min-height: 80px;
+    }
+    .abc-item {
+      position: relative;
+      display: grid;
+      gap: 8px;
+      padding: 10px 42px 10px 10px;
+      border: 1px solid rgba(74,24,9,.12);
+      border-radius: 12px;
+      background: #fff9ea;
+      cursor: pointer;
+    }
+    .abc-item.selected {
+      border-color: var(--brown);
+      box-shadow: 0 0 0 3px rgba(242, 192, 120, .4);
+    }
+    .abc-item label {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin: 0;
+      font-weight: 750;
+    }
+    .abc-item input {
+      width: 18px;
+      min-height: 18px;
+      margin-top: 2px;
+      accent-color: #2f7d42;
+    }
+    .abc-item.done label span {
+      color: #7a6c60;
+      text-decoration: line-through;
+    }
+    .abc-actions {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+    .abc-menu-button {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      min-height: 28px;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      color: var(--brown);
+      background: transparent;
+      cursor: pointer;
+      font-size: 1.15rem;
+      font-weight: 950;
+      line-height: 1;
+    }
+    .abc-menu-button:hover,
+    .abc-menu-button:focus-visible,
+    .abc-actions.open .abc-menu-button {
+      border-color: var(--line);
+      background: #fffdf6;
+      outline: none;
+    }
+    .abc-menu {
+      position: absolute;
+      z-index: 10;
+      top: 34px;
+      right: 0;
+      display: none;
+      min-width: 158px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fffdf6;
+      box-shadow: 0 16px 32px rgba(74,24,9,.18);
+    }
+    .abc-actions.open .abc-menu { display: grid; gap: 4px; }
+    .abc-menu button,
+    .abc-menu span {
+      display: block;
+      width: 100%;
+      min-height: 34px;
+      border: 0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: var(--brown);
+      background: transparent;
+      text-align: left;
+      font-size: .82rem;
+      font-weight: 850;
+    }
+    .abc-menu button {
+      cursor: pointer;
+    }
+    .abc-menu button:hover,
+    .abc-menu button:focus-visible {
+      color: var(--cream-2);
+      background: var(--brown);
+      outline: none;
+    }
+    .abc-menu span {
+      color: #8a7768;
+      cursor: default;
+    }
+    .roadmap-modules {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff9ea;
+    }
+    .roadmap-modules h4 {
+      margin: 0 0 12px;
+      color: var(--brown);
+    }
+    .module-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .module-tags span {
+      border-radius: 999px;
+      padding: 7px 10px;
+      color: #684938;
+      background: #fffdf6;
+      border: 1px solid rgba(74,24,9,.12);
+      font-size: .82rem;
+      font-weight: 750;
+    }
+
+    .teacher-admin {
+      padding: clamp(52px, 7vw, 92px) clamp(18px, 5vw, 72px);
+      background: var(--brown);
+      color: var(--cream-2);
+    }
+    .teacher-admin h2 { color: var(--cream-2); }
+    .teacher-admin > p { max-width: 760px; color: rgba(255,244,220,.82); }
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 28px;
+    }
+    .admin-card {
+      min-height: 230px;
+      padding: 20px;
+      border: 1px solid rgba(255,244,220,.16);
+      border-radius: 16px;
+      background: rgba(255,244,220,.08);
+    }
+    .admin-card strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--gold);
+      font-size: 1.2rem;
+    }
+
+    .cta {
+      padding: clamp(60px, 8vw, 100px) 24px;
+      text-align: center;
+      background: var(--cream-2);
+    }
+    .cta h2 { color: var(--brown); }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 26px clamp(24px, 5vw, 70px);
+      color: rgba(255,244,220,.82);
+      background: var(--brown);
+    }
+
+    dialog {
+      width: min(92vw, 430px);
+      border: 0;
+      border-radius: 18px;
+      padding: 0;
+      background: var(--cream-2);
+      color: var(--ink);
+      box-shadow: var(--shadow);
+    }
+    dialog::backdrop { background: rgba(26,10,4,.56); }
+    form { padding: 28px; }
+    label { display: grid; gap: 8px; margin: 14px 0; font-weight: 800; }
+    input {
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fffdf6;
+    }
+    .form-note,
+    .form-message {
+      margin: 12px 0 0;
+      border-radius: 12px;
+      padding: 12px;
+      line-height: 1.5;
+      color: #684938;
+      background: #fff9ea;
+    }
+    .form-message {
+      display: none;
+      color: #8f2b18;
+      background: #fff0e9;
+      border: 1px solid rgba(160, 56, 36, .25);
+    }
+    .form-message.visible { display: block; }
+    .close {
+      float: right;
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--gold);
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      header { top: 34px; }
+      nav { display: none; }
+      .intro, .app-shell, .homework-grid, .pricing-heading { grid-template-columns: 1fr; }
+      .craft-grid, .cards, .plans-grid, .savings, .method-flow, .admin-grid, .info-grid { grid-template-columns: 1fr; }
+      .mosaic { grid-template-columns: 1fr 1fr; }
+      .tile, .tile:nth-child(n) { grid-column: span 1; }
+      .slots { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .page { width: 100%; margin: 0; border-radius: 0; }
+      header { width: calc(100% - 32px); }
+      .brand span:last-child { display: none; }
+      .hero { min-height: 620px; }
+      .button-row, footer, .billing { flex-direction: column; }
+      .btn { width: 100%; }
+      .mosaic, .slots { grid-template-columns: 1fr; }
+      .resource { grid-template-columns: 42px 1fr; }
+      .resource .btn { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a class="brand" href="#inicio" aria-label="Teacher Maria Nascimento">
+        <span class="brand-mark">TM</span>
+        <span>Teacher Maria</span>
+      </a>
+      <nav aria-label="Navegação principal">
+        <a href="#historia">Escola</a>
+        <a href="#aulas">Aulas</a>
+        <a href="#metodo">Método</a>
+        <a href="#portal">Portal</a>
+        <a href="#planos">Planos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <a class="login-btn" href="portal.html">Área do aluno</a>
+    </header>
+
+    <main>
+      <section class="hero" id="inicio">
+        <div class="hero-inner">
+          <p class="eyebrow">Aulas online de inglês para adultos</p>
+          <h1>Inglês com clareza, estrutura e confiança.</h1>
+          <p>
+            A escola da Teacher Maria Nascimento foi pensada para adultos que querem sair
+            do inglês solto e construir uma comunicação mais natural, segura e acompanhada
+            de perto.
+          </p>
+          <div class="button-row">
+            <a class="btn" href="#planos">Ver planos</a>
+            <a class="btn ghost" href="#historia">Conhecer a Teacher Maria</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="intro" id="historia">
+        <div class="intro-copy">
+          <p class="eyebrow">Sobre a escola</p>
+          <h2>Uma escola online adulta, elegante e bem estruturada.</h2>
+          <p>
+            Comecei a ensinar inglês há quatro anos, com um único aluno. Desde então, acompanho
+            adultos que entendem algumas coisas, já estudaram antes, mas ainda travam na hora
+            de falar.
+          </p>
+          <p>
+            A escola nasceu dessa percepção: muitos alunos não precisam de mais uma promessa
+            rápida, e sim de clareza, acompanhamento e uma estrutura que organize o aprendizado.
+          </p>
+        </div>
+        <div class="photo-panel" aria-label="Foto da Teacher Maria Nascimento">
+          <img src="assets/teacher-maria-brown-portrait.png" alt="Teacher Maria Nascimento">
+        </div>
+      </section>
+
+      <section class="info-section" id="aulas">
+        <div class="info-heading">
+          <p class="eyebrow">Para quem são as aulas</p>
+          <h2>Para adultos que querem parar de estudar no escuro.</h2>
+          <p>
+            As aulas são para quem já tentou aprender inglês antes, sente que sabe partes soltas
+            do idioma, mas ainda precisa de estrutura, prática e acompanhamento para falar com segurança.
+          </p>
+        </div>
+        <div class="info-grid">
+          <article class="info-card">
+            <span>1</span>
+            <h3>Você entende, mas trava</h3>
+            <p>O foco é transformar conhecimento passivo em resposta, fala e comunicação real.</p>
+          </article>
+          <article class="info-card">
+            <span>2</span>
+            <h3>Você precisa de clareza</h3>
+            <p>O Método ABC mostra o que já está dominado, o que está em desenvolvimento e o que ainda precisa ser trabalhado.</p>
+          </article>
+          <article class="info-card">
+            <span>3</span>
+            <h3>Você quer acompanhamento</h3>
+            <p>Turmas reduzidas, tarefas, feedback, listening e materiais extras ajudam a manter constância fora da aula.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="craft" id="metodo">
+        <div class="craft-header">
+          <p class="eyebrow">Método ABC</p>
+          <h2>O aluno enxerga exatamente o que falta para chegar à fluência.</h2>
+          <p>
+            No Método ABC, cada aluno recebe uma lista clara de habilidades que precisa dominar
+            para se comunicar em inglês. Essas habilidades começam no C, passam para o B e chegam
+            ao A conforme o aluno evolui junto com a Teacher Maria.
+          </p>
+        </div>
+        <div class="method-flow" aria-label="Como funciona o Método ABC">
+          <article class="method-step">
+            <strong>C - Construção</strong>
+            <p>É onde ficam as habilidades que o aluno ainda precisa aprender ou organizar. Exemplo: Present Simple começa no C quando ainda não está seguro.</p>
+          </article>
+          <article class="method-step">
+            <strong>B - Base em desenvolvimento</strong>
+            <p>A habilidade vai para o B quando o aluno já entende melhor, consegue usar com apoio e começa a acertar com mais consistência.</p>
+          </article>
+          <article class="method-step">
+            <strong>A - Autonomia</strong>
+            <p>A habilidade chega ao A quando o aluno entende, usa e reconhece aquele ponto com segurança em fala, escuta, leitura e escrita.</p>
+          </article>
+        </div>
+        <p class="method-note">
+          A ideia é simples e visual: quando todas as habilidades necessárias estiverem no A,
+          o aluno consegue ver a própria evolução e entender por que já está mais próximo da fluência,
+          sem depender de uma promessa vaga.
+        </p>
+      </section>
+
+      <section class="info-section alt">
+        <div class="info-heading">
+          <p class="eyebrow">Como as aulas funcionam</p>
+          <h2>Uma rotina simples para evoluir com consistência.</h2>
+        </div>
+        <div class="info-grid">
+          <article class="info-card">
+            <span>A</span>
+            <h3>Aula ao vivo</h3>
+            <p>Encontros online em turma reduzida, com prática de fala, correção e construção de repertório.</p>
+          </article>
+          <article class="info-card">
+            <span>B</span>
+            <h3>Portal do aluno</h3>
+            <p>O aluno acompanha homework, materiais extras, contrato, pagamentos, reposições e o próprio roadmap ABC.</p>
+          </article>
+          <article class="info-card">
+            <span>C</span>
+            <h3>Feedback contínuo</h3>
+            <p>Cada tarefa e habilidade mostra onde o aluno está, o que melhorou e qual é o próximo passo.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="portal" id="portal">
+        <div class="portal-heading">
+          <p class="eyebrow">Demonstração da área do aluno</p>
+          <h2>Uma prévia de como o portal funciona.</h2>
+          <p>Esta seção é apenas uma demonstração visual. O acesso do aluno abre em uma página separada, com login e portal próprios.</p>
+        </div>
+
+        <div class="app-shell">
+          <aside class="sidebar">
+            <div class="profile">
+              <span class="avatar">AM</span>
+              <div>
+                <strong>Ana Martins</strong>
+                <small>Turma: Mondays 18h</small>
+              </div>
+            </div>
+            <button class="tab active" type="button" data-tab="painel">Painel</button>
+            <button class="tab" type="button" data-tab="abc">Método ABC</button>
+            <button class="tab" type="button" data-tab="homework">Homeworks</button>
+            <button class="tab" type="button" data-tab="recursos">Recursos</button>
+            <button class="tab" type="button" data-tab="agenda">Reposições</button>
+            <button class="tab" type="button" data-tab="contrato">Contrato</button>
+            <button class="tab" type="button" data-tab="pagamento">Pagamentos</button>
+          </aside>
+
+          <section class="panel-area">
+            <div class="panel-top">
+              <div>
+                <p class="eyebrow">Portal</p>
+                <h3 id="panelTitle">Painel da semana</h3>
+              </div>
+              <a class="btn" href="portal.html">Abrir portal do aluno</a>
+            </div>
+
+            <div class="panel active" data-panel="painel">
+              <div class="cards">
+                <article class="mini-card info">
+                  <span class="status-pill neutral">Agendada</span>
+                  <span>Próxima aula</span>
+                  <strong>Segunda, 18:00</strong>
+                  <p>Turma: Mondays 18h. Tema: rotina, hábitos e Present Simple.</p>
+                </article>
+                <article class="mini-card warning">
+                  <span class="status-pill waiting">Pendente</span>
+                  <span>Homework</span>
+                  <strong>Writing: My weekly routine</strong>
+                  <p>Prazo: sexta-feira, 22:00. Envie pelo portal para receber feedback.</p>
+                </article>
+                <article class="mini-card success">
+                  <span class="status-pill good">Ativo</span>
+                  <span>Contrato</span>
+                  <strong>Semestral</strong>
+                  <p>6x de R$329,90. Acesso liberado para aulas, tarefas e materiais.</p>
+                </article>
+                <article class="mini-card danger">
+                  <span class="status-pill bad">Pendente</span>
+                  <span>Pagamento</span>
+                  <strong>R$329,90</strong>
+                  <p>Vence em 3 dias. O lembrete automático será enviado antes do prazo.</p>
+                </article>
+              </div>
+              <div class="timeline">
+                <p><strong>Hoje:</strong> revisar a habilidade “Present Simple em rotina” no quadro ABC.</p>
+                <p><strong>Listening:</strong> assistir “airport check-in” antes da próxima aula.</p>
+                <p><strong>Reposição:</strong> nenhuma solicitação em aberto no momento.</p>
+              </div>
+            </div>
+
+            <div class="panel" data-panel="abc">
+              <div class="abc-panel-intro">
+                <p>
+                  Roadmap de fluência: cada habilidade começa no C, passa para o B quando está em desenvolvimento
+                  e chega ao A quando o aluno domina com segurança.
+                </p>
+                <div class="abc-progress" data-abc-progress>8 no A</div>
+              </div>
+              <div class="abc-board" aria-label="Quadro do Método ABC">
+                <article class="abc-column" data-stage="a">
+                  <h4>A (facilidades do aluno)</h4>
+                  <div class="abc-list" data-abc-list="a">
+                    <div class="abc-item done">
+                      <label><input type="checkbox" checked><span>Cumprimentos</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item done">
+                      <label><input type="checkbox" checked><span>Despedidas</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item done">
+                      <label><input type="checkbox" checked><span>Apresentações</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item done">
+                      <label><input type="checkbox" checked><span>Informação pessoal</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item done">
+                      <label><input type="checkbox" checked><span>Perguntar informações pessoais</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item done">
+                      <label><input type="checkbox" checked><span>Alfabeto</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item done">
+                      <label><input type="checkbox" checked><span>Soletração</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item done">
+                      <label><input type="checkbox" checked><span>Números</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="abc-column" data-stage="b">
+                  <h4>B (a melhorar)</h4>
+                  <div class="abc-list" data-abc-list="b">
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Horários</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Dias da semana</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Meses</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Nacionalidades</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Países</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Sujeito, verbo e complemento</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Ordem básica da frase</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Verbo To Be</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="abc-column" data-stage="c">
+                  <h4>C (precisa ser trabalhado)</h4>
+                  <div class="abc-list" data-abc-list="c">
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Pronomes pessoais</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Contrações</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Adjetivos básicos</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Demonstrativos (this/that/these/those)</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Possessivos</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>There is / There are</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Família, profissões e objetos da sala</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                    <div class="abc-item">
+                      <label><input type="checkbox"><span>Casa, cores e roupas</span></label>
+                      <div class="abc-actions"></div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              <div class="roadmap-modules">
+                <h4>Roadmap completo dentro do portal</h4>
+                <div class="module-tags" aria-label="Módulos do roadmap de fluência">
+                  <span>1. Fundamentos da Comunicação</span>
+                  <span>2. Presente e Vida Diária</span>
+                  <span>3. Descrição e Localização</span>
+                  <span>4. Ações em Progresso</span>
+                  <span>5. Passado</span>
+                  <span>6. Futuro</span>
+                  <span>7. Comparação</span>
+                  <span>8. Verbos Modais</span>
+                  <span>9. Experiências e Resultados</span>
+                  <span>10. Narrativas Avançadas</span>
+                  <span>11. Condicionais</span>
+                  <span>12. Voz Passiva</span>
+                  <span>13. Reported Speech</span>
+                  <span>14. Relative Clauses</span>
+                  <span>15. Gerunds & Infinitives</span>
+                  <span>16. Futuro Avançado</span>
+                  <span>17. Linking & Discourse</span>
+                  <span>18. Word Formation</span>
+                  <span>19. Advanced Grammar</span>
+                  <span>20. Phrasal Verbs</span>
+                  <span>21. Collocations</span>
+                  <span>22. Pronunciation</span>
+                  <span>23. Communication Skills</span>
+                  <span>24. Writing</span>
+                  <span>25. Vocabulary</span>
+                  <span>26. Natural Fluency</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" data-panel="homework">
+              <div class="homework-grid">
+                <article class="homework-card">
+                  <h3>Writing: My weekly routine</h3>
+                  <p>Escreva pelo menos 35 palavras usando usually, often e sometimes.</p>
+                  <textarea data-answer placeholder="Cole ou escreva sua resposta aqui"></textarea>
+                  <button class="btn" type="button" data-correct>Enviar e corrigir</button>
+                </article>
+                <article class="feedback" data-feedback>
+                  <p class="eyebrow">Correção automática</p>
+                  <h3>Aguardando envio</h3>
+                  <p>Aqui aparecem nota, comentários e sugestões de revisão.</p>
+                </article>
+              </div>
+            </div>
+
+            <div class="panel" data-panel="recursos">
+              <div class="resource-list">
+                <article class="resource"><span class="play">&gt;</span><div><strong>Listening: ordering politely</strong><br><small>8 min | Listening guiado</small></div><button class="btn" type="button" data-resource="listening">Abrir</button></article>
+                <article class="resource"><span class="play">&gt;</span><div><strong>Video: job interview phrases</strong><br><small>12 min | Conversação aplicada</small></div><button class="btn" type="button" data-resource="video">Abrir</button></article>
+                <article class="resource"><span class="play">?</span><div><strong>Quiz: present perfect</strong><br><small>15 questões</small></div><button class="btn" type="button" data-resource="quiz">Abrir</button></article>
+              </div>
+              <div class="resource-detail" data-resource-detail>
+                <p class="eyebrow">Recurso extra</p>
+                <h3>Escolha uma atividade acima</h3>
+                <p>Ao abrir um recurso, o aluno visualiza a orientação de estudo, o objetivo da atividade e o que precisa entregar depois.</p>
+              </div>
+            </div>
+
+            <div class="panel" data-panel="agenda">
+              <div class="slots">
+                <button class="slot" type="button">Seg 18:00</button>
+                <button class="slot" type="button">Qua 20:00</button>
+                <button class="slot" type="button">Sex 17:30</button>
+                <button class="slot" type="button">Sab 10:00</button>
+              </div>
+              <div class="schedule-actions">
+                <button class="btn" type="button" data-confirm-slot disabled>Confirmar solicitação</button>
+                <p class="status" data-status>Selecione um horário para solicitar reposição.</p>
+              </div>
+            </div>
+
+            <div class="panel" data-panel="contrato">
+              <article class="contract success">
+                <span class="status-pill good">Ativo</span>
+                <h3>Contrato ativo</h3>
+                <p>Plano semestral, turma reduzida, aproximadamente 8 aulas por mês. Total: R$1.979,40 em 6x de R$329,90.</p>
+                <button class="btn" type="button">Baixar contrato</button>
+              </article>
+            </div>
+
+            <div class="panel" data-panel="pagamento">
+              <article class="billing danger">
+                <div>
+                  <p class="eyebrow">Status financeiro</p>
+                  <span class="status-pill bad">Pendente</span>
+                  <strong data-payment-status>Pendente</strong>
+                  <p>Parcela atual: R$329,90. O sistema envia lembrete automático antes do vencimento e quando houver pendência.</p>
+                </div>
+                <button class="btn" type="button" data-pay>Marcar como pago</button>
+              </article>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="pricing" id="planos">
+        <div class="pricing-heading">
+          <div>
+            <p class="eyebrow">Planos e investimento</p>
+            <h2>Escolha o compromisso que combina com sua rotina.</h2>
+          </div>
+          <p>
+            Valores calculados para aproximadamente 8 aulas por mês. Os planos semestral
+            e anual reduzem o valor por aula, dão mais continuidade ao processo e incluem
+            aulas bônus temáticas.
+          </p>
+        </div>
+
+        <div class="plans-grid">
+          <article class="price-card" data-plan-card role="button" tabindex="0" aria-pressed="false">
+            <span class="badge">Sem fidelidade</span>
+            <h3>Mensal</h3>
+            <strong class="price">R$359,90</strong>
+            <p>por mês, ideal para começar sem compromisso longo.</p>
+            <ul>
+              <li>Total: R$359,90 por mês</li>
+              <li>Desconto: 0%</li>
+              <li>Valor aproximado: R$44,99 por aula</li>
+              <li class="no-bonus">Não inclui aulas bônus temáticas</li>
+            </ul>
+            <div class="price-meta">
+              <span>Mensal</span>
+              <span>8 aulas/mês</span>
+            </div>
+          </article>
+
+          <article class="price-card" data-plan-card role="button" tabindex="0" aria-pressed="false">
+            <span class="badge">8,3% OFF</span>
+            <h3>Semestral</h3>
+            <strong class="price">6x R$329,90</strong>
+            <p>6 meses de acompanhamento com economia real no contrato.</p>
+            <ul>
+              <li>Total: R$1.979,40</li>
+              <li>Economiza R$180,00</li>
+              <li>Valor aproximado: R$41,24 por aula</li>
+              <li class="bonus">Inclui aulas bônus sobre livros, músicas e filmes</li>
+            </ul>
+            <div class="price-meta">
+              <span>6 meses</span>
+              <span>R$41,24/aula</span>
+            </div>
+          </article>
+
+          <article class="price-card selected" data-plan-card role="button" tabindex="0" aria-pressed="true">
+            <span class="badge">17,2% OFF</span>
+            <h3>Anual</h3>
+            <strong class="price">12x R$297,90</strong>
+            <p>O melhor valor para quem quer consistência e evolução ao longo do ano.</p>
+            <ul>
+              <li>Total: R$3.574,80</li>
+              <li>Economiza R$744,00</li>
+              <li>Valor aproximado: R$37,24 por aula</li>
+              <li class="bonus">Inclui aulas bônus sobre livros, músicas e filmes</li>
+            </ul>
+            <div class="price-meta">
+              <span>12 meses</span>
+              <span>R$37,24/aula</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="story">
+        <p class="eyebrow">A história da Teacher Maria</p>
+        <h2>Antes de ensinar, eu também precisei aprender a destravar.</h2>
+        <p>
+          Minha relação com o inglês não nasceu de uma fórmula pronta. Eu também já tive
+          dificuldade, insegurança e aquela sensação de entender algumas coisas, mas não saber
+          exatamente como transformar isso em fala, resposta e comunicação real.
+        </p>
+        <p>
+          Quando comecei a ensinar, há quatro anos, percebi que muitos adultos carregavam essa
+          mesma sensação. Foi daí que nasceu a minha forma de conduzir as aulas: com clareza,
+          acompanhamento próximo e um mapa visível para o aluno entender o que já domina, o que
+          está melhorando e o que ainda precisa ser trabalhado.
+        </p>
+        <p>
+          Para mim, ensinar inglês é observar pessoas. É entender onde cada aluno trava e criar
+          um caminho para que ele deixe de depender de promessas vagas e consiga enxergar a própria
+          evolução com segurança.
+        </p>
+      </section>
+
+      <section class="faq">
+        <div class="info-heading">
+          <p class="eyebrow">Dúvidas frequentes</p>
+          <h2>Antes de entrar, entenda como funciona.</h2>
+        </div>
+        <div class="faq-list">
+          <details open>
+            <summary>As aulas são individuais ou em grupo?</summary>
+            <p>As aulas são online e podem acontecer em turmas reduzidas, com até 5 alunos, para manter participação, feedback e acompanhamento próximo.</p>
+          </details>
+          <details>
+            <summary>Eu preciso saber meu nível antes de começar?</summary>
+            <p>Não. A proposta do Método ABC é justamente mostrar, de forma mais clara que níveis tradicionais, quais habilidades você já domina e quais ainda precisa desenvolver.</p>
+          </details>
+          <details>
+            <summary>O que são as aulas bônus?</summary>
+            <p>Nos planos semestral e anual, o aluno tem acesso a aulas temáticas sobre livros, músicas e filmes para ampliar repertório e contato natural com o idioma.</p>
+          </details>
+          <details>
+            <summary>Como funcionam reposições?</summary>
+            <p>O aluno solicita um horário pelo portal. A solicitação fica aguardando confirmação, e a professora responde em até 48 horas.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="cta" id="contato">
+        <p class="eyebrow">Matrículas</p>
+        <h2>Comece sua jornada com acompanhamento claro.</h2>
+        <p>Entre para uma turma reduzida, acompanhe seu progresso pelo Método ABC e tenha uma rotina de estudo organizada para falar inglês com mais segurança.</p>
+        <div class="button-row">
+          <a class="btn" href="portal.html">Entrar como aluno</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>Teacher Maria Nascimento</strong>
+      <span>Aulas online de inglês para adultos.</span>
+    </footer>
+  </div>
+
+  <script>
+    const titles = {
+      painel: "Painel da semana",
+      abc: "Método ABC",
+      homework: "Homeworks",
+      recursos: "Recursos extras",
+      agenda: "Agendar reposição",
+      contrato: "Contrato",
+      pagamento: "Pagamentos"
+    };
+
+    function selectPlan(card) {
+      document.querySelectorAll("[data-plan-card]").forEach((item) => {
+        item.classList.remove("selected");
+        item.setAttribute("aria-pressed", "false");
+      });
+      card.classList.add("selected");
+      card.setAttribute("aria-pressed", "true");
+    }
+
+    document.querySelectorAll("[data-plan-card]").forEach((card) => {
+      card.addEventListener("click", () => selectPlan(card));
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          selectPlan(card);
+        }
+      });
+    });
+
+    function updateAbcProgress() {
+      const total = document.querySelectorAll(".abc-item").length;
+      const completed = document.querySelectorAll('[data-abc-list="a"] .abc-item').length;
+      document.querySelector("[data-abc-progress]").textContent = `${completed} de ${total} no A`;
+    }
+
+    function syncAbcItem(item, stage) {
+      const checkbox = item.querySelector('input[type="checkbox"]');
+      const done = stage === "a";
+      item.classList.toggle("done", done);
+      checkbox.checked = done;
+    }
+
+    function updateAbcActions(item, currentStage) {
+      const labels = { a: "A", b: "B", c: "C" };
+      const descriptions = { a: "Mover para A", b: "Mover para B", c: "Mover para C" };
+      const order = { c: 0, b: 1, a: 2 };
+      const options = ["c", "b", "a"].filter((stage) => order[stage] > order[currentStage]);
+      const menuItems = options.length
+        ? options.map((stage) => `<button type="button" data-move="${stage}">${descriptions[stage]}</button>`).join("")
+        : "<span>Já está no A</span>";
+
+      item.querySelector(".abc-actions").innerHTML = `
+        <button class="abc-menu-button" type="button" aria-label="Opções da habilidade" aria-expanded="false">...</button>
+        <div class="abc-menu">${menuItems}</div>
+      `;
+    }
+
+    document.querySelectorAll(".abc-item input").forEach((checkbox) => {
+      checkbox.addEventListener("change", () => {
+        checkbox.closest(".abc-item").classList.toggle("done", checkbox.checked);
+      });
+    });
+
+    document.querySelectorAll(".abc-list").forEach((list) => {
+      list.querySelectorAll(".abc-item").forEach((item) => updateAbcActions(item, list.dataset.abcList));
+    });
+
+    document.addEventListener("click", (event) => {
+      const menuButton = event.target.closest(".abc-menu-button");
+      if (menuButton) {
+        const actions = menuButton.closest(".abc-actions");
+        const isOpen = actions.classList.toggle("open");
+        menuButton.setAttribute("aria-expanded", String(isOpen));
+        document.querySelectorAll(".abc-actions").forEach((item) => {
+          if (item !== actions) {
+            item.classList.remove("open");
+            item.querySelector(".abc-menu-button")?.setAttribute("aria-expanded", "false");
+          }
+        });
+        return;
+      }
+
+      const button = event.target.closest("[data-move]");
+      if (button) {
+        const target = button.dataset.move;
+        const item = button.closest(".abc-item");
+        document.querySelector(`[data-abc-list="${target}"]`).appendChild(item);
+        syncAbcItem(item, target);
+        updateAbcActions(item, target);
+        updateAbcProgress();
+        document.querySelectorAll(".abc-actions").forEach((actions) => actions.classList.remove("open"));
+      }
+
+      if (!event.target.closest(".abc-actions")) {
+        document.querySelectorAll(".abc-actions").forEach((actions) => {
+          actions.classList.remove("open");
+          actions.querySelector(".abc-menu-button")?.setAttribute("aria-expanded", "false");
+        });
+      }
+    });
+
+    updateAbcProgress();
+
+    document.querySelectorAll("[data-tab]").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const id = tab.dataset.tab;
+        document.querySelectorAll("[data-tab]").forEach((item) => item.classList.remove("active"));
+        document.querySelectorAll("[data-panel]").forEach((panel) => panel.classList.remove("active"));
+        tab.classList.add("active");
+        document.querySelector(`[data-panel="${id}"]`).classList.add("active");
+        document.querySelector("#panelTitle").textContent = titles[id];
+      });
+    });
+
+    const resourceContent = {
+      listening: {
+        title: "Listening: ordering politely",
+        body: "Objetivo: treinar compreensão de pedidos educados em situações reais. O aluno escuta o áudio, marca expressões-chave e envia um resumo curto do que entendeu.",
+        items: ["Foco: could I have, would you like, anything else", "Entrega: 5 frases novas + resumo em inglês", "Correção: vocabulário, compreensão e naturalidade"]
+      },
+      video: {
+        title: "Video: job interview phrases",
+        body: "Objetivo: ampliar repertório para responder perguntas profissionais com mais segurança. O aluno assiste ao vídeo e prepara respostas curtas.",
+        items: ["Foco: experiência, rotina, pontos fortes", "Entrega: 3 respostas gravadas ou escritas", "Correção: clareza, estrutura e pronúncia"]
+      },
+      quiz: {
+        title: "Quiz: present perfect",
+        body: "Objetivo: revisar o uso do present perfect dentro de frases úteis, sem decorar regra solta. O aluno responde e recebe indicação do que precisa voltar para o B ou C no Método ABC.",
+        items: ["Foco: have/has, ever, never, already, yet", "Entrega: 15 respostas", "Correção: automática na plataforma conectada"]
+      }
+    };
+
+    document.querySelectorAll("[data-resource]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const content = resourceContent[button.dataset.resource];
+        document.querySelector("[data-resource-detail]").innerHTML = `
+          <p class="eyebrow">Recurso extra</p>
+          <h3>${content.title}</h3>
+          <p>${content.body}</p>
+          <ul>${content.items.map((item) => `<li>${item}</li>`).join("")}</ul>
+        `;
+      });
+    });
+
+    document.querySelector("[data-correct]").addEventListener("click", () => {
+      const answer = document.querySelector("[data-answer]").value.trim();
+      const words = answer ? answer.split(/\s+/).length : 0;
+      const good = words >= 35;
+      document.querySelector("[data-feedback]").innerHTML = `
+        <p class="eyebrow">Correção automática</p>
+        <h3>${good ? "Muito bom: 86/100" : "Precisa completar: 58/100"}</h3>
+        <p>${good
+          ? "Boa organização. Revise preposições de tempo e tente variar os conectores."
+          : "Escreva pelo menos 35 palavras e inclua exemplos com usually, often e sometimes."}</p>
+      `;
+    });
+
+    let selectedSlot = "";
+    const confirmSlotButton = document.querySelector("[data-confirm-slot]");
+
+    document.querySelectorAll(".slot").forEach((slot) => {
+      slot.addEventListener("click", () => {
+        document.querySelectorAll(".slot").forEach((item) => item.classList.remove("selected"));
+        slot.classList.add("selected");
+        selectedSlot = slot.textContent;
+        confirmSlotButton.disabled = false;
+        document.querySelector("[data-status]").textContent =
+          `${slot.textContent} selecionado. Confirme a solicitação para enviar para a professora.`;
+      });
+    });
+
+    confirmSlotButton.addEventListener("click", () => {
+      if (!selectedSlot) return;
+      document.querySelector("[data-status]").textContent =
+        `Solicitação confirmada para ${selectedSlot}. A professora te responderá em até 48 horas.`;
+      confirmSlotButton.textContent = "Solicitação enviada";
+      confirmSlotButton.disabled = true;
+    });
+
+    document.querySelector("[data-pay]").addEventListener("click", (event) => {
+      const billing = event.currentTarget.closest(".billing");
+      const pill = billing.querySelector(".status-pill");
+      billing.classList.remove("danger");
+      billing.classList.add("success");
+      pill.textContent = "Em dia";
+      pill.classList.remove("bad");
+      pill.classList.add("good");
+      document.querySelector("[data-payment-status]").textContent = "Em dia";
+      document.querySelector("[data-payment-status]").style.color = "#245d2d";
+      event.currentTarget.textContent = "Confirmado";
+      event.currentTarget.disabled = true;
+    });
+  </script>
+</body>
+</html>
+

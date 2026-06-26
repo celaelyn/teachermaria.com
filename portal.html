@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portal do Aluno | Teacher Maria Nascimento</title>
+  <meta name="description" content="Portal do aluno da Teacher Maria Nascimento para acompanhar aulas, homeworks, Método ABC, recursos extras, contrato e pagamentos.">
+  <style>
+    :root {
+      --cream: #f8ead0;
+      --cream-2: #fff4dc;
+      --brown: #4a1809;
+      --brown-2: #6f3e22;
+      --caramel: #9d673d;
+      --gold: #f2c078;
+      --ink: #25160f;
+      --line: rgba(74, 24, 9, .18);
+      --green: #2f7a3e;
+      --green-bg: #e7f7e2;
+      --red: #9a2f1c;
+      --red-bg: #ffe2d8;
+      --yellow: #8a5a13;
+      --yellow-bg: #fff0bf;
+      --shadow: 0 24px 70px rgba(74, 24, 9, .18);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--cream-2);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .hidden { display: none !important; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 18px;
+      color: var(--brown);
+      background: var(--gold);
+      font-weight: 900;
+    }
+    .btn.secondary {
+      border: 1px solid var(--line);
+      color: var(--brown);
+      background: #fff9ea;
+    }
+    .btn.danger {
+      color: #fff9ea;
+      background: var(--red);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--caramel);
+      font-size: .74rem;
+      font-weight: 950;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    .pill {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .76rem;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    .pill.good { color: var(--green); background: var(--green-bg); }
+    .pill.bad { color: var(--red); background: var(--red-bg); }
+    .pill.waiting { color: var(--yellow); background: var(--yellow-bg); }
+    .pill.neutral { color: var(--brown); background: var(--gold); }
+
+    .login-screen {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      background:
+        linear-gradient(90deg, rgba(74,24,9,.92), rgba(74,24,9,.68)),
+        url("school-hero.png") center / cover;
+    }
+    .login-copy {
+      display: grid;
+      align-content: center;
+      gap: 18px;
+      min-height: 100vh;
+      padding: clamp(32px, 7vw, 92px);
+      color: #fff4dc;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 950;
+    }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      color: var(--brown);
+      background: var(--gold);
+    }
+    .login-copy h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2.6rem, 6vw, 5.9rem);
+      line-height: .92;
+      letter-spacing: 0;
+    }
+    .login-copy p {
+      max-width: 620px;
+      margin: 0;
+      color: rgba(255, 244, 220, .9);
+      line-height: 1.8;
+    }
+    .login-panel-wrap {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: clamp(24px, 5vw, 72px);
+      background: rgba(255, 244, 220, .92);
+    }
+    .login-card {
+      width: min(100%, 460px);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: clamp(24px, 4vw, 36px);
+      background: #fffaf0;
+      box-shadow: var(--shadow);
+    }
+    .login-card h2 { margin: 0 0 10px; color: var(--brown); font-size: clamp(1.8rem, 3vw, 2.5rem); }
+    .login-card p { margin: 0; color: #684938; line-height: 1.65; }
+    .login-card label {
+      display: grid;
+      gap: 8px;
+      margin: 16px 0;
+      font-weight: 850;
+      color: var(--brown);
+    }
+    .login-card input {
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fffdf6;
+    }
+    .login-actions { display: grid; gap: 12px; margin-top: 18px; }
+    .login-message {
+      display: none;
+      margin-top: 14px;
+      border: 1px solid rgba(160, 56, 36, .25);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--red);
+      background: var(--red-bg);
+      line-height: 1.5;
+    }
+    .login-message.visible { display: block; }
+    .access-note {
+      margin-top: 18px !important;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff4dc;
+      font-size: .92rem;
+    }
+
+    .portal-app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      background: #fff4dc;
+    }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 24px;
+      color: #fff4dc;
+      background: var(--brown);
+    }
+    .sidebar .brand { margin-bottom: 18px; }
+    .student-card {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid rgba(255, 244, 220, .2);
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(255, 244, 220, .08);
+    }
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      color: var(--brown);
+      background: var(--gold);
+      font-weight: 950;
+    }
+    .student-card strong, .student-card small { display: block; }
+    .student-card small { color: rgba(255, 244, 220, .76); }
+    .nav-button {
+      min-height: 46px;
+      border: 0;
+      border-radius: 12px;
+      padding: 0 14px;
+      color: rgba(255, 244, 220, .88);
+      background: transparent;
+      font-weight: 850;
+      text-align: left;
+    }
+    .nav-button.active {
+      color: var(--brown);
+      background: var(--gold);
+    }
+    .sidebar-footer {
+      display: grid;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .main {
+      min-width: 0;
+      padding: clamp(20px, 4vw, 44px);
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .topbar h1 {
+      margin: 0;
+      color: var(--brown);
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+    .topbar p { margin: 8px 0 0; color: #684938; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      background: #fffaf0;
+      box-shadow: 0 10px 28px rgba(74, 24, 9, .08);
+    }
+    .card h2, .card h3, .card h4 { margin: 0 0 10px; color: var(--brown); }
+    .card p { margin: 0; color: #684938; line-height: 1.65; }
+    .metric {
+      display: grid;
+      gap: 8px;
+      min-height: 164px;
+      align-content: start;
+    }
+    .metric strong {
+      display: block;
+      color: var(--brown);
+      font-size: 1.25rem;
+    }
+    .timeline { display: grid; gap: 12px; }
+    .timeline p {
+      border-left: 5px solid var(--gold);
+      border-radius: 10px;
+      padding: 14px 16px;
+      background: #fffaf0;
+    }
+
+    .abc-intro {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .abc-board {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(260px, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+    .abc-column {
+      min-height: 480px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fffaf0;
+    }
+    .abc-column[data-stage="a"] { border-color: rgba(47, 122, 62, .35); }
+    .abc-column[data-stage="b"] { border-color: rgba(138, 90, 19, .35); }
+    .abc-column[data-stage="c"] { border-color: rgba(154, 47, 28, .28); }
+    .abc-list { display: grid; gap: 10px; }
+    .abc-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff9ea;
+    }
+    .abc-item.done span { color: #76695f; text-decoration: line-through; }
+    .abc-item label {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-weight: 850;
+    }
+    .abc-item input { margin-top: 3px; }
+    .abc-menu-button {
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(74, 24, 9, .18);
+      border-radius: 50%;
+      color: var(--brown);
+      background: #fffdf6;
+      font-weight: 950;
+    }
+    .abc-actions { position: relative; }
+    .abc-menu {
+      position: absolute;
+      z-index: 10;
+      top: 38px;
+      right: 0;
+      display: none;
+      min-width: 158px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 6px;
+      background: #fffdf6;
+      box-shadow: 0 12px 28px rgba(74, 24, 9, .16);
+    }
+    .abc-actions.open .abc-menu { display: grid; gap: 4px; }
+    .abc-menu button,
+    .abc-menu span {
+      border: 0;
+      border-radius: 9px;
+      padding: 9px;
+      color: var(--brown);
+      background: transparent;
+      font-size: .85rem;
+      font-weight: 850;
+      text-align: left;
+    }
+    .abc-menu button:hover { background: #fff0d2; }
+    .module-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .module-tags span {
+      border-radius: 999px;
+      padding: 9px 12px;
+      color: var(--brown);
+      background: #fff0d2;
+      font-size: .86rem;
+      font-weight: 850;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 170px;
+      resize: vertical;
+      margin: 12px 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fffdf6;
+    }
+    .resource-list, .homework-list, .slots { display: grid; gap: 12px; }
+    .resource, .homework-row {
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+    .play {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      color: var(--brown);
+      background: var(--gold);
+      font-weight: 950;
+    }
+    .resource-detail, .message-box {
+      margin-top: 16px;
+      border-radius: 14px;
+      padding: 16px;
+      color: #684938;
+      background: #fff9ea;
+      line-height: 1.65;
+    }
+    .slots {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 16px;
+    }
+    .slot {
+      min-height: 74px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      color: var(--brown);
+      background: #fffaf0;
+      font-weight: 900;
+    }
+    .slot.selected {
+      border-color: var(--brown);
+      color: #fff4dc;
+      background: var(--brown);
+    }
+    .billing-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 1050px) {
+      .portal-app { grid-template-columns: 1fr; }
+      .sidebar {
+        position: static;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .student-card { min-width: 260px; }
+      .sidebar-footer { margin-top: 0; margin-left: auto; }
+      .grid-4, .grid-2, .abc-board { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .login-screen { grid-template-columns: 1fr; }
+      .login-copy, .login-panel-wrap { min-height: auto; }
+      .topbar, .billing-row { align-items: stretch; flex-direction: column; }
+      .slots, .resource, .homework-row { grid-template-columns: 1fr; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <section class="login-screen" data-login-screen>
+    <div class="login-copy">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">TM</span>
+        <span>Teacher Maria Nascimento</span>
+      </a>
+      <div>
+        <p class="eyebrow">Portal do aluno</p>
+        <h1>Seu inglês organizado em um só lugar.</h1>
+      </div>
+      <p>Entre para acompanhar aulas, homeworks, recursos extras, reposições, contrato, pagamentos e seu roadmap do Método ABC.</p>
+      <a class="btn secondary" href="index.html">Voltar ao site principal</a>
+    </div>
+
+    <div class="login-panel-wrap">
+      <form class="login-card" data-login-form>
+        <p class="eyebrow">Acesso do aluno</p>
+        <h2>Entrar no portal</h2>
+        <p>Use o acesso cadastrado pela professora. Nesta versão inicial, deixei um acesso de teste para você visualizar o fluxo completo.</p>
+        <label>Email
+          <input type="email" name="email" placeholder="seuemail@exemplo.com" autocomplete="email" required>
+        </label>
+        <label>Senha
+          <input type="password" name="password" placeholder="Sua senha" autocomplete="current-password" required>
+        </label>
+        <div class="login-actions">
+          <button class="btn" type="submit">Acessar portal</button>
+          <a class="btn secondary" href="index.html">Voltar ao site</a>
+        </div>
+        <p class="login-message" data-login-message></p>
+        <p class="access-note">Acesso de teste: <strong>aluno@teachermaria.com</strong> | Senha: <strong>maria2026</strong></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="portal-app hidden" data-portal-app>
+    <aside class="sidebar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">TM</span>
+        <span>Portal</span>
+      </a>
+      <div class="student-card">
+        <span class="avatar">AM</span>
+        <div>
+          <strong>Ana Martins</strong>
+          <small>Turma: Mondays 18h</small>
+        </div>
+      </div>
+      <button class="nav-button active" type="button" data-tab="painel">Painel</button>
+      <button class="nav-button" type="button" data-tab="abc">Método ABC</button>
+      <button class="nav-button" type="button" data-tab="homework">Homeworks</button>
+      <button class="nav-button" type="button" data-tab="recursos">Recursos extras</button>
+      <button class="nav-button" type="button" data-tab="agenda">Reposições</button>
+      <button class="nav-button" type="button" data-tab="contrato">Contrato</button>
+      <button class="nav-button" type="button" data-tab="pagamento">Pagamentos</button>
+      <div class="sidebar-footer">
+        <a class="btn secondary" href="index.html">Site principal</a>
+        <button class="btn danger" type="button" data-logout>Sair</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <p class="eyebrow">Área do aluno</p>
+          <h1 data-page-title>Painel da semana</h1>
+          <p>Bem-vinda, Ana. Aqui fica sua rotina de estudos e acompanhamento.</p>
+        </div>
+        <span class="pill good">Contrato semestral ativo</span>
+      </div>
+
+      <section class="panel active" data-panel="painel">
+        <div class="grid-4">
+          <article class="card metric">
+            <span class="pill neutral">Agendada</span>
+            <span>Próxima aula</span>
+            <strong>Segunda, 18:00</strong>
+            <p>Turma: Mondays 18h. Tema: rotina, hábitos e Present Simple.</p>
+          </article>
+          <article class="card metric">
+            <span class="pill waiting">Pendente</span>
+            <span>Homework</span>
+            <strong>Writing: My weekly routine</strong>
+            <p>Prazo: sexta-feira, 22:00.</p>
+          </article>
+          <article class="card metric">
+            <span class="pill good">Ativo</span>
+            <span>Contrato</span>
+            <strong>Semestral</strong>
+            <p>6x de R$329,90. Acesso liberado para aulas, tarefas e materiais.</p>
+          </article>
+          <article class="card metric">
+            <span class="pill bad">Pendente</span>
+            <span>Pagamento</span>
+            <strong>R$329,90</strong>
+            <p>Vence em 3 dias.</p>
+          </article>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Checklist da semana</h3>
+            <div class="timeline">
+              <p><strong>Hoje:</strong> revisar Present Simple em rotina.</p>
+              <p><strong>Listening:</strong> assistir “airport check-in”.</p>
+              <p><strong>ABC:</strong> mover habilidades somente quando estiverem consolidadas.</p>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Recado da professora</h3>
+            <p>A prioridade desta semana é falar sobre rotina sem traduzir palavra por palavra. Use frases curtas, claras e naturais.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="abc">
+        <div class="card abc-intro">
+          <div>
+            <p class="eyebrow">Método ABC</p>
+            <h2>Roadmap de fluência</h2>
+            <p>Cada habilidade começa no C, passa para o B quando está em desenvolvimento e chega ao A quando o aluno domina com segurança.</p>
+          </div>
+          <span class="pill good" data-abc-progress>8 de 24 no A</span>
+        </div>
+
+        <div class="abc-board" aria-label="Quadro do Método ABC">
+          <article class="abc-column" data-stage="a">
+            <h3>A (facilidades do aluno)</h3>
+            <div class="abc-list" data-abc-list="a">
+              <div class="abc-item done"><label><input type="checkbox" checked><span>Cumprimentos</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item done"><label><input type="checkbox" checked><span>Despedidas</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item done"><label><input type="checkbox" checked><span>Apresentações</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item done"><label><input type="checkbox" checked><span>Informação pessoal</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item done"><label><input type="checkbox" checked><span>Perguntar informações pessoais</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item done"><label><input type="checkbox" checked><span>Alfabeto</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item done"><label><input type="checkbox" checked><span>Soletração</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item done"><label><input type="checkbox" checked><span>Números</span></label><div class="abc-actions"></div></div>
+            </div>
+          </article>
+
+          <article class="abc-column" data-stage="b">
+            <h3>B (a melhorar)</h3>
+            <div class="abc-list" data-abc-list="b">
+              <div class="abc-item"><label><input type="checkbox"><span>Horários</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Dias da semana</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Meses</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Nacionalidades</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Países</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Sujeito, verbo e complemento</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Ordem básica da frase</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Verbo To Be</span></label><div class="abc-actions"></div></div>
+            </div>
+          </article>
+
+          <article class="abc-column" data-stage="c">
+            <h3>C (precisa ser trabalhado)</h3>
+            <div class="abc-list" data-abc-list="c">
+              <div class="abc-item"><label><input type="checkbox"><span>Pronomes pessoais</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Contrações</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Adjetivos básicos</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Demonstrativos (this/that/these/those)</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Possessivos</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>There is / There are</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Família, profissões e objetos da sala</span></label><div class="abc-actions"></div></div>
+              <div class="abc-item"><label><input type="checkbox"><span>Casa, cores e roupas</span></label><div class="abc-actions"></div></div>
+            </div>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:16px">
+          <h3>Roadmap completo</h3>
+          <div class="module-tags">
+            <span>Fundamentos</span><span>Presente</span><span>Descrição</span><span>Ações em progresso</span>
+            <span>Passado</span><span>Futuro</span><span>Comparação</span><span>Verbos modais</span>
+            <span>Experiências</span><span>Condicionais</span><span>Voz passiva</span><span>Reported speech</span>
+            <span>Relative clauses</span><span>Phrasal verbs</span><span>Pronúncia</span><span>Writing</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel" data-panel="homework">
+        <div class="grid-2">
+          <article class="card">
+            <p class="eyebrow">Homework pendente</p>
+            <h2>Writing: My weekly routine</h2>
+            <p>Escreva pelo menos 35 palavras usando usually, often e sometimes.</p>
+            <textarea data-answer placeholder="Cole ou escreva sua resposta aqui"></textarea>
+            <button class="btn" type="button" data-correct>Enviar homework</button>
+          </article>
+          <article class="card" data-feedback>
+            <p class="eyebrow">Feedback</p>
+            <h2>Aguardando envio</h2>
+            <p>Depois do envio, aparecem nota, comentários e sugestões de revisão.</p>
+          </article>
+        </div>
+        <article class="card" style="margin-top:16px">
+          <h3>Homeworks anteriores</h3>
+          <div class="homework-list">
+            <div class="homework-row"><span class="pill good">Corrigido</span><div><strong>Introducing myself</strong><br><small>Nota: 91/100</small></div><button class="btn secondary" type="button">Ver feedback</button></div>
+            <div class="homework-row"><span class="pill good">Corrigido</span><div><strong>My favorite place</strong><br><small>Nota: 84/100</small></div><button class="btn secondary" type="button">Ver feedback</button></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel" data-panel="recursos">
+        <div class="card">
+          <h2>Recursos extras</h2>
+          <p>Materiais para praticar fora da aula: listening, vídeos, quizzes e repertório temático.</p>
+          <div class="resource-list" style="margin-top:16px">
+            <article class="resource"><span class="play">&gt;</span><div><strong>Listening: ordering politely</strong><br><small>8 min | Listening guiado</small></div><button class="btn" type="button" data-resource="listening">Abrir</button></article>
+            <article class="resource"><span class="play">&gt;</span><div><strong>Video: job interview phrases</strong><br><small>12 min | Conversação aplicada</small></div><button class="btn" type="button" data-resource="video">Abrir</button></article>
+            <article class="resource"><span class="play">?</span><div><strong>Quiz: present perfect</strong><br><small>15 questões</small></div><button class="btn" type="button" data-resource="quiz">Abrir</button></article>
+          </div>
+          <div class="resource-detail" data-resource-detail>
+            <p class="eyebrow">Recurso extra</p>
+            <h3>Escolha uma atividade acima</h3>
+            <p>O conteúdo selecionado aparece aqui com objetivo, orientação e entrega esperada.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="agenda">
+        <div class="card">
+          <p class="eyebrow">Reposições</p>
+          <h2>Solicitar novo horário</h2>
+          <p>Escolha um horário disponível e confirme a solicitação. A professora te responderá em até 48 horas.</p>
+          <div class="slots" style="margin-top:16px">
+            <button class="slot" type="button">Seg 18:00</button>
+            <button class="slot" type="button">Qua 20:00</button>
+            <button class="slot" type="button">Sex 17:30</button>
+            <button class="slot" type="button">Sab 10:00</button>
+          </div>
+          <button class="btn" type="button" data-confirm-slot disabled>Confirmar solicitação</button>
+          <p class="message-box" data-status>Selecione um horário para solicitar reposição.</p>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="contrato">
+        <div class="grid-2">
+          <article class="card">
+            <span class="pill good">Ativo</span>
+            <h2 style="margin-top:12px">Contrato semestral</h2>
+            <p>Plano ativo por 6 meses, com aulas online em turma reduzida, tarefas, materiais extras e acompanhamento pelo Método ABC.</p>
+          </article>
+          <article class="card">
+            <h3>Resumo do contrato</h3>
+            <p><strong>Turma:</strong> Mondays 18h</p>
+            <p><strong>Valor:</strong> 6x de R$329,90</p>
+            <p><strong>Status:</strong> ativo</p>
+            <p><strong>Aulas bônus:</strong> inclui encontros temáticos sobre livros, músicas e filmes.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="pagamento">
+        <div class="grid-2">
+          <article class="card">
+            <span class="pill bad" data-payment-pill>Pendente</span>
+            <h2 style="margin-top:12px">Pagamento de junho</h2>
+            <p>Valor: R$329,90. Vencimento em 3 dias.</p>
+            <div class="billing-row">
+              <strong data-payment-status>Pendente</strong>
+              <button class="btn" type="button" data-pay>Marcar como pago</button>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Histórico</h3>
+            <div class="timeline">
+              <p><strong>Maio:</strong> pago em 10/05.</p>
+              <p><strong>Abril:</strong> pago em 10/04.</p>
+              <p><strong>Março:</strong> pago em 10/03.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <script>
+    const demoCredentials = {
+      email: "aluno@teachermaria.com",
+      password: "maria2026"
+    };
+
+    const titles = {
+      painel: "Painel da semana",
+      abc: "Método ABC",
+      homework: "Homeworks",
+      recursos: "Recursos extras",
+      agenda: "Reposições",
+      contrato: "Contrato",
+      pagamento: "Pagamentos"
+    };
+
+    const loginScreen = document.querySelector("[data-login-screen]");
+    const portalApp = document.querySelector("[data-portal-app]");
+
+    function showPortal() {
+      loginScreen.classList.add("hidden");
+      portalApp.classList.remove("hidden");
+    }
+
+    document.querySelector("[data-login-form]").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const email = form.email.value.trim().toLowerCase();
+      const password = form.password.value.trim();
+      const message = document.querySelector("[data-login-message]");
+
+      if (email === demoCredentials.email && password === demoCredentials.password) {
+        sessionStorage.setItem("teacherMariaPortal", "logged");
+        showPortal();
+        return;
+      }
+
+      message.textContent = "Acesso não encontrado. Confira o e-mail e a senha cadastrados pela professora.";
+      message.classList.add("visible");
+    });
+
+    document.querySelector("[data-logout]").addEventListener("click", () => {
+      sessionStorage.removeItem("teacherMariaPortal");
+      portalApp.classList.add("hidden");
+      loginScreen.classList.remove("hidden");
+    });
+
+    if (sessionStorage.getItem("teacherMariaPortal") === "logged") {
+      showPortal();
+    }
+
+    document.querySelectorAll("[data-tab]").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const id = tab.dataset.tab;
+        document.querySelectorAll("[data-tab]").forEach((item) => item.classList.remove("active"));
+        document.querySelectorAll("[data-panel]").forEach((panel) => panel.classList.remove("active"));
+        tab.classList.add("active");
+        document.querySelector(`[data-panel="${id}"]`).classList.add("active");
+        document.querySelector("[data-page-title]").textContent = titles[id];
+      });
+    });
+
+    function updateAbcProgress() {
+      const total = document.querySelectorAll(".abc-item").length;
+      const completed = document.querySelectorAll('[data-abc-list="a"] .abc-item').length;
+      document.querySelector("[data-abc-progress]").textContent = `${completed} de ${total} no A`;
+    }
+
+    function syncAbcItem(item, stage) {
+      const checkbox = item.querySelector('input[type="checkbox"]');
+      const done = stage === "a";
+      item.classList.toggle("done", done);
+      checkbox.checked = done;
+    }
+
+    function updateAbcActions(item, currentStage) {
+      const order = { c: 0, b: 1, a: 2 };
+      const descriptions = { a: "Mover para A", b: "Mover para B", c: "Mover para C" };
+      const options = ["c", "b", "a"].filter((stage) => order[stage] > order[currentStage]);
+      const menuItems = options.length
+        ? options.map((stage) => `<button type="button" data-move="${stage}">${descriptions[stage]}</button>`).join("")
+        : "<span>Já está no A</span>";
+
+      item.querySelector(".abc-actions").innerHTML = `
+        <button class="abc-menu-button" type="button" aria-label="Opções da habilidade" aria-expanded="false">...</button>
+        <div class="abc-menu">${menuItems}</div>
+      `;
+    }
+
+    document.querySelectorAll(".abc-list").forEach((list) => {
+      list.querySelectorAll(".abc-item").forEach((item) => updateAbcActions(item, list.dataset.abcList));
+    });
+
+    document.addEventListener("click", (event) => {
+      const menuButton = event.target.closest(".abc-menu-button");
+      if (menuButton) {
+        const actions = menuButton.closest(".abc-actions");
+        const isOpen = actions.classList.toggle("open");
+        menuButton.setAttribute("aria-expanded", String(isOpen));
+        document.querySelectorAll(".abc-actions").forEach((item) => {
+          if (item !== actions) {
+            item.classList.remove("open");
+            item.querySelector(".abc-menu-button")?.setAttribute("aria-expanded", "false");
+          }
+        });
+        return;
+      }
+
+      const moveButton = event.target.closest("[data-move]");
+      if (moveButton) {
+        const target = moveButton.dataset.move;
+        const item = moveButton.closest(".abc-item");
+        document.querySelector(`[data-abc-list="${target}"]`).appendChild(item);
+        syncAbcItem(item, target);
+        updateAbcActions(item, target);
+        updateAbcProgress();
+        document.querySelectorAll(".abc-actions").forEach((actions) => actions.classList.remove("open"));
+        return;
+      }
+
+      if (!event.target.closest(".abc-actions")) {
+        document.querySelectorAll(".abc-actions").forEach((actions) => {
+          actions.classList.remove("open");
+          actions.querySelector(".abc-menu-button")?.setAttribute("aria-expanded", "false");
+        });
+      }
+    });
+
+    updateAbcProgress();
+
+    document.querySelector("[data-correct]").addEventListener("click", () => {
+      const answer = document.querySelector("[data-answer]").value.trim();
+      const words = answer ? answer.split(/\s+/).length : 0;
+      const good = words >= 35;
+      document.querySelector("[data-feedback]").innerHTML = `
+        <p class="eyebrow">Feedback</p>
+        <h2>${good ? "Muito bom: 86/100" : "Precisa completar: 58/100"}</h2>
+        <p>${good
+          ? "Boa organização. Revise preposições de tempo e tente variar os conectores."
+          : "Escreva pelo menos 35 palavras e inclua exemplos com usually, often e sometimes."}</p>
+      `;
+    });
+
+    const resourceContent = {
+      listening: {
+        title: "Listening: ordering politely",
+        body: "Objetivo: treinar compreensão de pedidos educados em situações reais. O aluno escuta o áudio, marca expressões-chave e envia um resumo curto do que entendeu.",
+        items: ["Foco: could I have, would you like, anything else", "Entrega: 5 frases novas + resumo em inglês", "Correção: vocabulário, compreensão e naturalidade"]
+      },
+      video: {
+        title: "Video: job interview phrases",
+        body: "Objetivo: ampliar repertório para responder perguntas profissionais com mais segurança. O aluno assiste ao vídeo e prepara respostas curtas.",
+        items: ["Foco: experiência, rotina, pontos fortes", "Entrega: 3 respostas gravadas ou escritas", "Correção: clareza, estrutura e pronúncia"]
+      },
+      quiz: {
+        title: "Quiz: present perfect",
+        body: "Objetivo: revisar o uso do present perfect dentro de frases úteis, sem decorar regra solta. O aluno responde e recebe indicação do que precisa voltar para o B ou C no Método ABC.",
+        items: ["Foco: have/has, ever, never, already, yet", "Entrega: 15 respostas", "Correção: automática na plataforma conectada"]
+      }
+    };
+
+    document.querySelectorAll("[data-resource]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const content = resourceContent[button.dataset.resource];
+        document.querySelector("[data-resource-detail]").innerHTML = `
+          <p class="eyebrow">Recurso extra</p>
+          <h3>${content.title}</h3>
+          <p>${content.body}</p>
+          <ul>${content.items.map((item) => `<li>${item}</li>`).join("")}</ul>
+        `;
+      });
+    });
+
+    let selectedSlot = "";
+    const confirmSlotButton = document.querySelector("[data-confirm-slot]");
+
+    document.querySelectorAll(".slot").forEach((slot) => {
+      slot.addEventListener("click", () => {
+        document.querySelectorAll(".slot").forEach((item) => item.classList.remove("selected"));
+        slot.classList.add("selected");
+        selectedSlot = slot.textContent;
+        confirmSlotButton.disabled = false;
+        document.querySelector("[data-status]").textContent = `Horário selecionado: ${selectedSlot}. Confirme para enviar a solicitação.`;
+      });
+    });
+
+    confirmSlotButton.addEventListener("click", () => {
+      document.querySelector("[data-status]").textContent = `Solicitação confirmada para ${selectedSlot}. A professora te responderá em até 48 horas.`;
+      confirmSlotButton.disabled = true;
+    });
+
+    document.querySelector("[data-pay]").addEventListener("click", () => {
+      document.querySelector("[data-payment-status]").textContent = "Aguardando conferência";
+      const pill = document.querySelector("[data-payment-pill]");
+      pill.textContent = "Em análise";
+      pill.classList.remove("bad");
+      pill.classList.add("waiting");
+    });
+  </script>
+</body>
+</html>
