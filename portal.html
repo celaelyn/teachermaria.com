@@ -488,6 +488,7 @@
       </div>
       <p>Entre para acompanhar aulas, homeworks, recursos extras, reposições, contrato, pagamentos e seu roadmap do Método ABC.</p>
       <a class="btn secondary" href="index.html">Voltar ao site principal</a>
+      <a class="btn secondary" href="professor.html">Sou professora</a>
     </div>
 
     <div class="login-panel-wrap">
@@ -504,6 +505,7 @@
         <div class="login-actions">
           <button class="btn" type="submit">Acessar portal</button>
           <a class="btn secondary" href="index.html">Voltar ao site</a>
+          <a class="btn secondary" href="professor.html">Sou professora</a>
         </div>
         <p class="login-message" data-login-message></p>
         <p class="access-note">Acesso de teste: <strong>aluno@teachermaria.com</strong> | Senha: <strong>maria2026</strong></p>
@@ -518,10 +520,10 @@
         <span>Portal</span>
       </a>
       <div class="student-card">
-        <span class="avatar">AM</span>
+        <span class="avatar" data-student-avatar>AM</span>
         <div>
-          <strong>Ana Martins</strong>
-          <small>Turma: Mondays 18h</small>
+          <strong data-student-name>Ana Martins</strong>
+          <small data-student-group>Turma: Mondays 18h</small>
         </div>
       </div>
       <button class="nav-button active" type="button" data-tab="painel">Painel</button>
@@ -532,6 +534,7 @@
       <button class="nav-button" type="button" data-tab="contrato">Contrato</button>
       <button class="nav-button" type="button" data-tab="pagamento">Pagamentos</button>
       <div class="sidebar-footer">
+        <a class="btn secondary" href="professor.html">Sou professora</a>
         <a class="btn secondary" href="index.html">Site principal</a>
         <button class="btn danger" type="button" data-logout>Sair</button>
       </div>
@@ -542,9 +545,9 @@
         <div>
           <p class="eyebrow">Área do aluno</p>
           <h1 data-page-title>Painel da semana</h1>
-          <p>Bem-vinda, Ana. Aqui fica sua rotina de estudos e acompanhamento.</p>
+          <p data-welcome>Bem-vinda, Ana. Aqui fica sua rotina de estudos e acompanhamento.</p>
         </div>
-        <span class="pill good">Contrato semestral ativo</span>
+        <span class="pill good" data-contract-pill>Contrato semestral ativo</span>
       </div>
 
       <section class="panel active" data-panel="painel">
@@ -564,7 +567,7 @@
           <article class="card metric">
             <span class="pill good">Ativo</span>
             <span>Contrato</span>
-            <strong>Semestral</strong>
+            <strong data-plan-name>Semestral</strong>
             <p>6x de R$329,90. Acesso liberado para aulas, tarefas e materiais.</p>
           </article>
           <article class="card metric">
@@ -683,7 +686,7 @@
         <div class="card">
           <h2>Recursos extras</h2>
           <p>Materiais para praticar fora da aula: listening, vídeos, quizzes e repertório temático.</p>
-          <div class="resource-list" style="margin-top:16px">
+          <div class="resource-list" style="margin-top:16px" data-resource-list>
             <article class="resource"><span class="play">&gt;</span><div><strong>Listening: ordering politely</strong><br><small>8 min | Listening guiado</small></div><button class="btn" type="button" data-resource="listening">Abrir</button></article>
             <article class="resource"><span class="play">&gt;</span><div><strong>Video: job interview phrases</strong><br><small>12 min | Conversação aplicada</small></div><button class="btn" type="button" data-resource="video">Abrir</button></article>
             <article class="resource"><span class="play">?</span><div><strong>Quiz: present perfect</strong><br><small>15 questões</small></div><button class="btn" type="button" data-resource="quiz">Abrir</button></article>
@@ -701,7 +704,7 @@
           <p class="eyebrow">Reposições</p>
           <h2>Solicitar novo horário</h2>
           <p>Escolha um horário disponível e confirme a solicitação. A professora te responderá em até 48 horas.</p>
-          <div class="slots" style="margin-top:16px">
+          <div class="slots" style="margin-top:16px" data-slots>
             <button class="slot" type="button">Seg 18:00</button>
             <button class="slot" type="button">Qua 20:00</button>
             <button class="slot" type="button">Sex 17:30</button>
@@ -754,9 +757,14 @@
   </section>
 
   <script>
-    const demoCredentials = {
+    const demoStudent = {
+      id: "student-ana",
+      name: "Ana Martins",
       email: "aluno@teachermaria.com",
-      password: "maria2026"
+      password: "maria2026",
+      group: "Mondays 18h",
+      plan: "Semestral",
+      status: "Ativo"
     };
 
     const titles = {
@@ -772,7 +780,32 @@
     const loginScreen = document.querySelector("[data-login-screen]");
     const portalApp = document.querySelector("[data-portal-app]");
 
-    function showPortal() {
+    function getStudents() {
+      const saved = localStorage.getItem("teacherMariaStudents");
+      if (!saved) return [demoStudent];
+      const students = JSON.parse(saved);
+      return students.length ? students : [demoStudent];
+    }
+
+    function findStudentByLogin(email, password) {
+      return getStudents().find((student) => student.email === email && student.password === password);
+    }
+
+    function findStudentByEmail(email) {
+      return getStudents().find((student) => student.email === email) || demoStudent;
+    }
+
+    function initials(name) {
+      return name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toUpperCase() || "AM";
+    }
+
+    function showPortal(student = demoStudent) {
+      document.querySelector("[data-student-name]").textContent = student.name;
+      document.querySelector("[data-student-avatar]").textContent = initials(student.name);
+      document.querySelector("[data-student-group]").textContent = `Turma: ${student.group}`;
+      document.querySelector("[data-welcome]").textContent = `Bem-vinda, ${student.name.split(" ")[0]}. Aqui fica sua rotina de estudos e acompanhamento.`;
+      document.querySelector("[data-plan-name]").textContent = student.plan;
+      document.querySelector("[data-contract-pill]").textContent = `Contrato ${student.plan.toLowerCase()} ativo`;
       loginScreen.classList.add("hidden");
       portalApp.classList.remove("hidden");
     }
@@ -784,9 +817,10 @@
       const password = form.password.value.trim();
       const message = document.querySelector("[data-login-message]");
 
-      if (email === demoCredentials.email && password === demoCredentials.password) {
-        sessionStorage.setItem("teacherMariaPortal", "logged");
-        showPortal();
+      const student = findStudentByLogin(email, password);
+      if (student) {
+        sessionStorage.setItem("teacherMariaPortalEmail", student.email);
+        showPortal(student);
         return;
       }
 
@@ -795,13 +829,14 @@
     });
 
     document.querySelector("[data-logout]").addEventListener("click", () => {
-      sessionStorage.removeItem("teacherMariaPortal");
+      sessionStorage.removeItem("teacherMariaPortalEmail");
       portalApp.classList.add("hidden");
       loginScreen.classList.remove("hidden");
     });
 
-    if (sessionStorage.getItem("teacherMariaPortal") === "logged") {
-      showPortal();
+    const savedPortalEmail = sessionStorage.getItem("teacherMariaPortalEmail");
+    if (savedPortalEmail) {
+      showPortal(findStudentByEmail(savedPortalEmail));
     }
 
     document.querySelectorAll("[data-tab]").forEach((tab) => {
@@ -896,47 +931,83 @@
       `;
     });
 
-    const resourceContent = {
-      listening: {
-        title: "Listening: ordering politely",
-        body: "Objetivo: treinar compreensão de pedidos educados em situações reais. O aluno escuta o áudio, marca expressões-chave e envia um resumo curto do que entendeu.",
-        items: ["Foco: could I have, would you like, anything else", "Entrega: 5 frases novas + resumo em inglês", "Correção: vocabulário, compreensão e naturalidade"]
-      },
-      video: {
-        title: "Video: job interview phrases",
-        body: "Objetivo: ampliar repertório para responder perguntas profissionais com mais segurança. O aluno assiste ao vídeo e prepara respostas curtas.",
-        items: ["Foco: experiência, rotina, pontos fortes", "Entrega: 3 respostas gravadas ou escritas", "Correção: clareza, estrutura e pronúncia"]
-      },
-      quiz: {
-        title: "Quiz: present perfect",
-        body: "Objetivo: revisar o uso do present perfect dentro de frases úteis, sem decorar regra solta. O aluno responde e recebe indicação do que precisa voltar para o B ou C no Método ABC.",
-        items: ["Foco: have/has, ever, never, already, yet", "Entrega: 15 respostas", "Correção: automática na plataforma conectada"]
-      }
-    };
+    function getPortalResources() {
+      const saved = localStorage.getItem("teacherMariaResources");
+      const fallback = [
+        { id: "listening", title: "Listening: ordering politely", type: "Listening", module: "Comunicação", file: "audio-demo.mp3", instructions: "Ouça o áudio, marque expressões-chave e envie um resumo curto do que entendeu." },
+        { id: "video", title: "Video: job interview phrases", type: "Vídeo", module: "Conversação", file: "video-demo.mp4", instructions: "Assista ao vídeo e prepare três respostas curtas para entrevista." },
+        { id: "quiz", title: "Quiz: present perfect", type: "Quiz", module: "Experiências", file: "quiz", instructions: "Responda às questões e veja quais pontos precisam voltar para o B ou C." }
+      ];
+      if (!saved) return fallback;
+      const resources = JSON.parse(saved);
+      return resources.length ? resources : fallback;
+    }
 
-    document.querySelectorAll("[data-resource]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const content = resourceContent[button.dataset.resource];
-        document.querySelector("[data-resource-detail]").innerHTML = `
-          <p class="eyebrow">Recurso extra</p>
-          <h3>${content.title}</h3>
-          <p>${content.body}</p>
-          <ul>${content.items.map((item) => `<li>${item}</li>`).join("")}</ul>
-        `;
-      });
+    function renderPortalResources() {
+      const resources = getPortalResources();
+      document.querySelector("[data-resource-list]").innerHTML = resources.map((resource) => `
+        <article class="resource">
+          <span class="play">&gt;</span>
+          <div>
+            <strong>${resource.title}</strong><br>
+            <small>${resource.type || "Recurso"} | ${resource.module || "Material extra"}</small>
+          </div>
+          <button class="btn" type="button" data-open-resource="${resource.id}">Abrir</button>
+        </article>
+      `).join("");
+    }
+
+    renderPortalResources();
+
+    document.querySelector("[data-resource-list]").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-open-resource]");
+      if (!button) return;
+      const resource = getPortalResources().find((item) => item.id === button.dataset.openResource);
+      document.querySelector("[data-resource-detail]").innerHTML = `
+        <p class="eyebrow">Recurso extra</p>
+        <h3>${resource.title}</h3>
+        <p>${resource.instructions || "Siga a orientação da professora para concluir este recurso."}</p>
+        <ul>
+          <li>Tipo: ${resource.type || "Material extra"}</li>
+          <li>Módulo: ${resource.module || "Sem módulo definido"}</li>
+          <li>Arquivo: ${resource.file || "Arquivo será disponibilizado pela professora"}</li>
+        </ul>
+      `;
     });
+
+    function getPortalSlots() {
+      const saved = localStorage.getItem("teacherMariaSlots");
+      const fallback = [
+        { id: "slot-1", date: "2026-06-29", time: "18:00", type: "Reposição", capacity: "1" },
+        { id: "slot-2", date: "2026-07-01", time: "20:00", type: "Reposição", capacity: "1" },
+        { id: "slot-3", date: "2026-07-03", time: "17:30", type: "Reposição", capacity: "1" }
+      ];
+      if (!saved) return fallback;
+      const slots = JSON.parse(saved);
+      return slots.length ? slots : fallback;
+    }
+
+    function renderPortalSlots() {
+      document.querySelector("[data-slots]").innerHTML = getPortalSlots().map((slot) => `
+        <button class="slot" type="button" data-slot-label="${slot.type} - ${slot.date} às ${slot.time}">
+          ${slot.date}<br>${slot.time}
+        </button>
+      `).join("");
+    }
+
+    renderPortalSlots();
 
     let selectedSlot = "";
     const confirmSlotButton = document.querySelector("[data-confirm-slot]");
 
-    document.querySelectorAll(".slot").forEach((slot) => {
-      slot.addEventListener("click", () => {
-        document.querySelectorAll(".slot").forEach((item) => item.classList.remove("selected"));
-        slot.classList.add("selected");
-        selectedSlot = slot.textContent;
-        confirmSlotButton.disabled = false;
-        document.querySelector("[data-status]").textContent = `Horário selecionado: ${selectedSlot}. Confirme para enviar a solicitação.`;
-      });
+    document.querySelector("[data-slots]").addEventListener("click", (event) => {
+      const slot = event.target.closest(".slot");
+      if (!slot) return;
+      document.querySelectorAll(".slot").forEach((item) => item.classList.remove("selected"));
+      slot.classList.add("selected");
+      selectedSlot = slot.dataset.slotLabel;
+      confirmSlotButton.disabled = false;
+      document.querySelector("[data-status]").textContent = `Horário selecionado: ${selectedSlot}. Confirme para enviar a solicitação.`;
     });
 
     confirmSlotButton.addEventListener("click", () => {

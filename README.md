@@ -6,6 +6,7 @@ Esta pasta contem a versao oficial do site para publicar no Vercel.
 
 - `index.html`: site principal, com apresentacao das aulas e demonstracao visual do portal.
 - `portal.html`: pagina separada da area do aluno, com login e portal do aluno.
+- `professor.html`: pagina separada da professora para cadastrar alunos, gerar acessos, organizar horarios, recursos, contratos, tarefas e pagamento.
 
 ## Como publicar no Vercel Drop
 
@@ -21,7 +22,7 @@ Se o projeto for conectado ao GitHub, qualquer alteracao enviada para o reposito
 
 ## Observacao importante
 
-Esta versao deixa a presenca online pronta, separa o site principal do portal do aluno e apresenta um acesso inicial de teste. Ela ainda nao cria login real com banco de dados sozinha.
+Esta versao deixa a presenca online pronta, separa o site principal do portal do aluno e cria uma area inicial da professora. Ela ainda nao cria login real com banco de dados sozinha.
 
 Para login privado, pagamentos automaticos, envio real de lembretes, contratos individuais, atividades salvas e correcao com IA funcionando com dados reais, o proximo passo e conectar:
 

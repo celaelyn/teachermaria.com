@@ -1,0 +1,1089 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sou Professora | Teacher Maria Nascimento</title>
+  <meta name="description" content="Painel administrativo da Teacher Maria Nascimento para gerenciar alunos, logins, horários, recursos, contratos, tarefas e pagamentos.">
+  <style>
+    :root {
+      --cream: #fff4dc;
+      --paper: #fffaf0;
+      --paper-2: #fff9ea;
+      --brown: #4a1809;
+      --brown-2: #6f3e22;
+      --caramel: #9d673d;
+      --gold: #f2c078;
+      --ink: #25160f;
+      --muted: #684938;
+      --line: rgba(74, 24, 9, .16);
+      --green: #2f7a3e;
+      --green-bg: #e7f7e2;
+      --red: #9a2f1c;
+      --red-bg: #ffe2d8;
+      --yellow: #8a5a13;
+      --yellow-bg: #fff0bf;
+      --shadow: 0 18px 48px rgba(74, 24, 9, .14);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .hidden { display: none !important; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      color: var(--brown);
+      background: var(--gold);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .btn.secondary {
+      border: 1px solid var(--line);
+      color: var(--brown);
+      background: var(--paper);
+    }
+    .btn.danger {
+      color: #fffaf0;
+      background: var(--red);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--caramel);
+      font-size: .74rem;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    .pill {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .74rem;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    .pill.good { color: var(--green); background: var(--green-bg); }
+    .pill.bad { color: var(--red); background: var(--red-bg); }
+    .pill.waiting { color: var(--yellow); background: var(--yellow-bg); }
+    .pill.neutral { color: var(--brown); background: var(--gold); }
+
+    .login-screen {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      background:
+        linear-gradient(90deg, rgba(74,24,9,.94), rgba(74,24,9,.64)),
+        url("school-hero.png") center / cover;
+    }
+    .login-copy {
+      display: grid;
+      align-content: center;
+      gap: 18px;
+      padding: clamp(32px, 7vw, 92px);
+      color: var(--cream);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 950;
+    }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      color: var(--brown);
+      background: var(--gold);
+    }
+    .login-copy h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2.6rem, 5vw, 5.2rem);
+      line-height: .94;
+    }
+    .login-copy p {
+      max-width: 640px;
+      margin: 0;
+      color: rgba(255, 244, 220, .9);
+      line-height: 1.75;
+    }
+    .login-card-wrap {
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      background: rgba(255, 244, 220, .94);
+    }
+    .login-card {
+      width: min(100%, 430px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .login-card h2 { margin: 0 0 10px; color: var(--brown); font-size: 2.1rem; }
+    .login-card p { margin: 0; color: var(--muted); line-height: 1.6; }
+    label {
+      display: grid;
+      gap: 8px;
+      color: var(--brown);
+      font-weight: 850;
+    }
+    input, select, textarea {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--ink);
+      background: #fffdf6;
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .form-grid .full { grid-column: 1 / -1; }
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 14px;
+    }
+    .message {
+      display: none;
+      margin-top: 12px;
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--brown);
+      background: var(--yellow-bg);
+      line-height: 1.5;
+    }
+    .message.visible { display: block; }
+    .access-note {
+      margin-top: 18px !important;
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--paper-2);
+      font-size: .92rem;
+    }
+
+    .admin-app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 278px 1fr;
+    }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 22px;
+      color: var(--cream);
+      background: var(--brown);
+    }
+    .teacher-card {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid rgba(255, 244, 220, .18);
+      border-radius: 8px;
+      padding: 12px;
+      background: rgba(255, 244, 220, .08);
+    }
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      color: var(--brown);
+      background: var(--gold);
+      font-weight: 950;
+    }
+    .teacher-card strong, .teacher-card small { display: block; }
+    .teacher-card small { color: rgba(255, 244, 220, .76); }
+    .nav-button {
+      min-height: 44px;
+      border: 0;
+      border-radius: 8px;
+      padding: 0 12px;
+      color: rgba(255, 244, 220, .88);
+      background: transparent;
+      font-weight: 850;
+      text-align: left;
+    }
+    .nav-button.active {
+      color: var(--brown);
+      background: var(--gold);
+    }
+    .sidebar-footer {
+      display: grid;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .main {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 44px);
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+    .topbar h1 {
+      margin: 0;
+      color: var(--brown);
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      line-height: 1;
+    }
+    .topbar p { margin: 8px 0 0; color: var(--muted); }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: var(--paper);
+      box-shadow: 0 10px 28px rgba(74, 24, 9, .07);
+    }
+    .card h2, .card h3, .card h4 { margin: 0 0 10px; color: var(--brown); }
+    .card p { margin: 0; color: var(--muted); line-height: 1.65; }
+    .metric {
+      display: grid;
+      gap: 8px;
+      min-height: 140px;
+      align-content: start;
+    }
+    .metric strong {
+      display: block;
+      color: var(--brown);
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      color: var(--brown);
+      background: var(--paper-2);
+      font-size: .82rem;
+      text-transform: uppercase;
+    }
+    tr:last-child td { border-bottom: 0; }
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+    .row-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--paper);
+    }
+    .row-card strong { color: var(--brown); }
+    .row-card small { color: var(--muted); }
+    .settings-box {
+      display: grid;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--paper-2);
+    }
+    .warning {
+      border: 1px solid rgba(154, 47, 28, .22);
+      border-radius: 8px;
+      padding: 14px;
+      color: var(--red);
+      background: var(--red-bg);
+      line-height: 1.55;
+    }
+
+    @media (max-width: 1080px) {
+      .admin-app { grid-template-columns: 1fr; }
+      .sidebar {
+        position: static;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .teacher-card { min-width: 260px; }
+      .sidebar-footer { margin-top: 0; margin-left: auto; }
+      .grid-4, .grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .login-screen { grid-template-columns: 1fr; }
+      .login-copy { padding: 28px; }
+      .login-card-wrap { padding: 20px; }
+      .topbar, .form-actions, .row-card { align-items: stretch; flex-direction: column; }
+      .form-grid { grid-template-columns: 1fr; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <section class="login-screen" data-login-screen>
+    <div class="login-copy">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">TM</span>
+        <span>Teacher Maria Nascimento</span>
+      </a>
+      <div>
+        <p class="eyebrow">Sou professora</p>
+        <h1>Controle seus alunos, aulas e materiais.</h1>
+      </div>
+      <p>Área administrativa para cadastrar alunos, gerar acessos, organizar reposições, publicar recursos extras, anexar contratos e preparar pagamentos.</p>
+      <a class="btn secondary" href="index.html">Voltar ao site principal</a>
+    </div>
+
+    <div class="login-card-wrap">
+      <form class="login-card" data-teacher-login>
+        <p class="eyebrow">Acesso da professora</p>
+        <h2>Entrar no painel</h2>
+        <p>Use o acesso de teste para visualizar o painel administrativo.</p>
+        <label style="margin-top:16px">Email
+          <input type="email" name="email" placeholder="professora@teachermaria.com" autocomplete="email" required>
+        </label>
+        <label style="margin-top:12px">Senha
+          <input type="password" name="password" placeholder="Sua senha" autocomplete="current-password" required>
+        </label>
+        <div class="form-actions">
+          <button class="btn" type="submit">Acessar painel</button>
+          <a class="btn secondary" href="portal.html">Portal do aluno</a>
+        </div>
+        <p class="message" data-login-message></p>
+        <p class="access-note">Acesso de teste: <strong>professora@teachermaria.com</strong> | Senha: <strong>admin2026</strong></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="admin-app hidden" data-admin-app>
+    <aside class="sidebar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">TM</span>
+        <span>Professora</span>
+      </a>
+      <div class="teacher-card">
+        <span class="avatar">TM</span>
+        <div>
+          <strong>Teacher Maria</strong>
+          <small>Painel administrativo</small>
+        </div>
+      </div>
+      <button class="nav-button active" type="button" data-tab="visao">Visão geral</button>
+      <button class="nav-button" type="button" data-tab="alunos">Alunos e logins</button>
+      <button class="nav-button" type="button" data-tab="pagamentos">Mercado Pago</button>
+      <button class="nav-button" type="button" data-tab="horarios">Reposições</button>
+      <button class="nav-button" type="button" data-tab="recursos">Recursos extras</button>
+      <button class="nav-button" type="button" data-tab="contratos">Contratos</button>
+      <button class="nav-button" type="button" data-tab="tarefas">Homeworks</button>
+      <div class="sidebar-footer">
+        <a class="btn secondary" href="portal.html">Ver portal do aluno</a>
+        <button class="btn danger" type="button" data-logout>Sair</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <p class="eyebrow">Painel da professora</p>
+          <h1 data-title>Visão geral</h1>
+          <p>Organize a operação da escola antes de conectar banco de dados, pagamentos e armazenamento real.</p>
+        </div>
+        <span class="pill waiting">Modo inicial</span>
+      </div>
+
+      <section class="panel active" data-panel="visao">
+        <div class="grid-4">
+          <article class="card metric">
+            <span class="pill good">Alunos</span>
+            <strong data-count-students>0</strong>
+            <p>Logins cadastrados no painel.</p>
+          </article>
+          <article class="card metric">
+            <span class="pill neutral">Reposições</span>
+            <strong data-count-slots>0</strong>
+            <p>Horários disponíveis para solicitação.</p>
+          </article>
+          <article class="card metric">
+            <span class="pill waiting">Recursos</span>
+            <strong data-count-resources>0</strong>
+            <p>Materiais extras cadastrados.</p>
+          </article>
+          <article class="card metric">
+            <span class="pill bad">Pagamentos</span>
+            <strong>Configurar</strong>
+            <p>Mercado Pago ainda precisa de integração real.</p>
+          </article>
+        </div>
+        <div class="grid-2" style="margin-top:16px">
+          <article class="card">
+            <h2>Próximos ajustes técnicos</h2>
+            <p>Para os logins funcionarem para alunos em celulares e computadores diferentes, será necessário conectar banco de dados, autenticação e armazenamento de arquivos.</p>
+          </article>
+          <article class="card">
+            <h2>Dados salvos nesta versão</h2>
+            <p>As informações cadastradas aqui ficam salvas no navegador atual para demonstração. Depois, esses mesmos campos viram o painel real da professora.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="alunos">
+        <div class="grid-2">
+          <article class="card">
+            <p class="eyebrow">Novo aluno</p>
+            <h2>Criar login</h2>
+            <form data-student-form>
+              <div class="form-grid">
+                <label>Nome do aluno
+                  <input name="name" placeholder="Ex.: Ana Martins" required>
+                </label>
+                <label>Email
+                  <input type="email" name="email" placeholder="ana@email.com" required>
+                </label>
+                <label>Turma
+                  <input name="group" placeholder="Mondays 18h" required>
+                </label>
+                <label>Plano
+                  <select name="plan">
+                    <option>Mensal</option>
+                    <option selected>Semestral</option>
+                    <option>Anual</option>
+                  </select>
+                </label>
+                <label class="full">Senha inicial
+                  <input name="password" placeholder="Deixe em branco para gerar automaticamente">
+                </label>
+              </div>
+              <div class="form-actions">
+                <button class="btn" type="submit">Criar acesso</button>
+                <button class="btn secondary" type="button" data-export>Exportar dados</button>
+              </div>
+            </form>
+            <p class="message" data-student-message></p>
+          </article>
+
+          <article class="card">
+            <p class="eyebrow">Convite</p>
+            <h2>Mensagem para enviar</h2>
+            <p data-invite-preview>Crie um aluno para gerar a mensagem com email, senha e link do portal.</p>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:16px">
+          <h2>Alunos cadastrados</h2>
+          <div class="table-wrap" style="margin-top:12px">
+            <table>
+              <thead>
+                <tr>
+                  <th>Aluno</th>
+                  <th>Login</th>
+                  <th>Turma</th>
+                  <th>Plano</th>
+                  <th>Status</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody data-students-table></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel" data-panel="pagamentos">
+        <div class="grid-2">
+          <article class="card">
+            <p class="eyebrow">Mercado Pago</p>
+            <h2>Configuração de pagamento</h2>
+            <div class="warning">Não coloque token real em site estático publicado. Na versão real, as chaves secretas ficam protegidas no servidor.</div>
+            <form data-payment-form style="margin-top:14px">
+              <div class="form-grid">
+                <label>Public Key
+                  <input name="publicKey" placeholder="APP_USR-...">
+                </label>
+                <label>Access Token
+                  <input name="accessToken" placeholder="APP_USR-..." type="password">
+                </label>
+                <label class="full">Webhook de confirmação
+                  <input name="webhook" placeholder="https://seusite.com/api/mercadopago/webhook">
+                </label>
+                <label>Link mensal
+                  <input name="monthly" placeholder="Cole o link de pagamento mensal">
+                </label>
+                <label>Link semestral
+                  <input name="semester" placeholder="Cole o link de pagamento semestral">
+                </label>
+                <label class="full">Link anual
+                  <input name="annual" placeholder="Cole o link de pagamento anual">
+                </label>
+              </div>
+              <div class="form-actions">
+                <button class="btn" type="submit">Salvar configuração</button>
+              </div>
+            </form>
+            <p class="message" data-payment-message></p>
+          </article>
+
+          <article class="card">
+            <p class="eyebrow">Status</p>
+            <h2 data-payment-status>Não conectado</h2>
+            <p>Quando conectarmos a plataforma real, o aluno verá pagamento pendente, pago ou em análise automaticamente.</p>
+            <div class="settings-box" style="margin-top:16px">
+              <strong>Fluxo planejado</strong>
+              <span>Aluno clica em pagar.</span>
+              <span>Mercado Pago confirma o pagamento.</span>
+              <span>Portal atualiza o status do aluno.</span>
+              <span>O lembrete só é enviado se houver pendência.</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="horarios">
+        <div class="grid-2">
+          <article class="card">
+            <p class="eyebrow">Reposições</p>
+            <h2>Adicionar horário</h2>
+            <form data-slot-form>
+              <div class="form-grid">
+                <label>Dia
+                  <input type="date" name="date" required>
+                </label>
+                <label>Horário
+                  <input type="time" name="time" required>
+                </label>
+                <label>Tipo
+                  <select name="type">
+                    <option>Reposição</option>
+                    <option>Aula bônus</option>
+                    <option>Plantão de dúvidas</option>
+                  </select>
+                </label>
+                <label>Vagas
+                  <input type="number" name="capacity" value="1" min="1" max="5">
+                </label>
+              </div>
+              <div class="form-actions">
+                <button class="btn" type="submit">Publicar horário</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="card">
+            <h2>Horários disponíveis</h2>
+            <div class="list" data-slots-list></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="recursos">
+        <div class="grid-2">
+          <article class="card">
+            <p class="eyebrow">Materiais extras</p>
+            <h2>Subir recurso</h2>
+            <form data-resource-form>
+              <div class="form-grid">
+                <label>Título
+                  <input name="title" placeholder="Listening: airport check-in" required>
+                </label>
+                <label>Tipo
+                  <select name="type">
+                    <option>Listening</option>
+                    <option>Vídeo</option>
+                    <option>Quiz</option>
+                    <option>PDF</option>
+                  </select>
+                </label>
+                <label>Módulo
+                  <input name="module" placeholder="Presente e Vida Diária">
+                </label>
+                <label>Arquivo
+                  <input type="file" name="file" accept="audio/*,video/*,.pdf,.doc,.docx">
+                </label>
+                <label class="full">Orientação para o aluno
+                  <textarea name="instructions" placeholder="Explique o que o aluno deve ouvir, responder ou entregar."></textarea>
+                </label>
+              </div>
+              <div class="form-actions">
+                <button class="btn" type="submit">Publicar recurso</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="card">
+            <h2>Recursos publicados</h2>
+            <div class="list" data-resources-list></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="contratos">
+        <div class="grid-2">
+          <article class="card">
+            <p class="eyebrow">Contratos</p>
+            <h2>Anexar contrato</h2>
+            <form data-contract-form>
+              <div class="form-grid">
+                <label>Aluno
+                  <select name="student" data-student-options></select>
+                </label>
+                <label>Plano
+                  <select name="plan">
+                    <option>Mensal</option>
+                    <option selected>Semestral</option>
+                    <option>Anual</option>
+                  </select>
+                </label>
+                <label class="full">Arquivo do contrato
+                  <input type="file" name="file" accept=".pdf,.doc,.docx">
+                </label>
+              </div>
+              <div class="form-actions">
+                <button class="btn" type="submit">Enviar contrato</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="card">
+            <h2>Contratos cadastrados</h2>
+            <div class="list" data-contracts-list></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="tarefas">
+        <div class="grid-2">
+          <article class="card">
+            <p class="eyebrow">Homeworks</p>
+            <h2>Criar tarefa</h2>
+            <form data-homework-form>
+              <div class="form-grid">
+                <label>Título
+                  <input name="title" placeholder="Writing: My weekly routine" required>
+                </label>
+                <label>Prazo
+                  <input type="datetime-local" name="due" required>
+                </label>
+                <label class="full">Instruções
+                  <textarea name="instructions" placeholder="Explique o que o aluno precisa escrever, gravar ou responder." required></textarea>
+                </label>
+              </div>
+              <div class="form-actions">
+                <button class="btn" type="submit">Publicar tarefa</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="card">
+            <h2>Tarefas publicadas</h2>
+            <div class="list" data-homeworks-list></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <script>
+    const teacherCredentials = {
+      email: "professora@teachermaria.com",
+      password: "admin2026"
+    };
+
+    const storageKeys = {
+      students: "teacherMariaStudents",
+      slots: "teacherMariaSlots",
+      resources: "teacherMariaResources",
+      contracts: "teacherMariaContracts",
+      homeworks: "teacherMariaHomeworks",
+      payment: "teacherMariaPaymentConfig"
+    };
+
+    const titles = {
+      visao: "Visão geral",
+      alunos: "Alunos e logins",
+      pagamentos: "Mercado Pago",
+      horarios: "Reposições",
+      recursos: "Recursos extras",
+      contratos: "Contratos",
+      tarefas: "Homeworks"
+    };
+
+    const defaults = {
+      students: [
+        { id: "student-ana", name: "Ana Martins", email: "aluno@teachermaria.com", password: "maria2026", group: "Mondays 18h", plan: "Semestral", status: "Ativo" }
+      ],
+      slots: [
+        { id: "slot-1", date: "2026-06-29", time: "18:00", type: "Reposição", capacity: "1" },
+        { id: "slot-2", date: "2026-07-01", time: "20:00", type: "Reposição", capacity: "1" }
+      ],
+      resources: [
+        { id: "resource-1", title: "Listening: ordering politely", type: "Listening", module: "Comunicação", file: "audio-demo.mp3", instructions: "Ouça e anote cinco expressões úteis." }
+      ],
+      contracts: [
+        { id: "contract-1", student: "Ana Martins", plan: "Semestral", file: "contrato-ana-martins.pdf" }
+      ],
+      homeworks: [
+        { id: "homework-1", title: "Writing: My weekly routine", due: "2026-06-26T22:00", instructions: "Escreva pelo menos 35 palavras usando usually, often e sometimes." }
+      ]
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => Array.from(document.querySelectorAll(selector));
+
+    function readData(key, fallback) {
+      const saved = localStorage.getItem(key);
+      return saved ? JSON.parse(saved) : fallback;
+    }
+
+    function writeData(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    let students = readData(storageKeys.students, defaults.students);
+    let slots = readData(storageKeys.slots, defaults.slots);
+    let resources = readData(storageKeys.resources, defaults.resources);
+    let contracts = readData(storageKeys.contracts, defaults.contracts);
+    let homeworks = readData(storageKeys.homeworks, defaults.homeworks);
+    let paymentConfig = readData(storageKeys.payment, {});
+
+    writeData(storageKeys.students, students);
+    writeData(storageKeys.slots, slots);
+    writeData(storageKeys.resources, resources);
+    writeData(storageKeys.contracts, contracts);
+    writeData(storageKeys.homeworks, homeworks);
+
+    function makeId(prefix) {
+      return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 999)}`;
+    }
+
+    function makePassword(name) {
+      const clean = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/\s+/)[0] || "aluno";
+      return `${clean}${Math.floor(1000 + Math.random() * 9000)}`;
+    }
+
+    function inviteText(student) {
+      return `Olá, ${student.name}! Seu acesso ao portal da Teacher Maria foi criado.\n\nLink: portal.html\nEmail: ${student.email}\nSenha: ${student.password}\nTurma: ${student.group}`;
+    }
+
+    function setMessage(selector, text) {
+      const item = $(selector);
+      item.textContent = text;
+      item.classList.add("visible");
+    }
+
+    function renderDashboard() {
+      $("[data-count-students]").textContent = students.length;
+      $("[data-count-slots]").textContent = slots.length;
+      $("[data-count-resources]").textContent = resources.length;
+    }
+
+    function renderStudents() {
+      $("[data-students-table]").innerHTML = students.map((student) => `
+        <tr>
+          <td><strong>${student.name}</strong></td>
+          <td>${student.email}<br><small>Senha: ${student.password}</small></td>
+          <td>${student.group}</td>
+          <td>${student.plan}</td>
+          <td><span class="pill good">${student.status}</span></td>
+          <td><button class="btn secondary" type="button" data-copy-student="${student.id}">Copiar acesso</button></td>
+        </tr>
+      `).join("");
+
+      $("[data-student-options]").innerHTML = students.map((student) => `<option>${student.name}</option>`).join("");
+    }
+
+    function renderSlots() {
+      $("[data-slots-list]").innerHTML = slots.length ? slots.map((slot) => `
+        <div class="row-card">
+          <div>
+            <strong>${slot.type} - ${slot.date} às ${slot.time}</strong><br>
+            <small>${slot.capacity} vaga(s) disponível(is)</small>
+          </div>
+          <button class="btn secondary" type="button" data-remove-slot="${slot.id}">Remover</button>
+        </div>
+      `).join("") : "<p>Nenhum horário publicado ainda.</p>";
+    }
+
+    function renderResources() {
+      $("[data-resources-list]").innerHTML = resources.length ? resources.map((resource) => `
+        <div class="row-card">
+          <div>
+            <strong>${resource.title}</strong><br>
+            <small>${resource.type} | ${resource.module || "Sem módulo"} | ${resource.file || "Sem arquivo"}</small>
+          </div>
+          <span class="pill neutral">Publicado</span>
+        </div>
+      `).join("") : "<p>Nenhum recurso publicado ainda.</p>";
+    }
+
+    function renderContracts() {
+      $("[data-contracts-list]").innerHTML = contracts.length ? contracts.map((contract) => `
+        <div class="row-card">
+          <div>
+            <strong>${contract.student}</strong><br>
+            <small>${contract.plan} | ${contract.file || "Arquivo não anexado"}</small>
+          </div>
+          <span class="pill good">Disponível</span>
+        </div>
+      `).join("") : "<p>Nenhum contrato cadastrado ainda.</p>";
+    }
+
+    function renderHomeworks() {
+      $("[data-homeworks-list]").innerHTML = homeworks.length ? homeworks.map((homework) => `
+        <div class="row-card">
+          <div>
+            <strong>${homework.title}</strong><br>
+            <small>Prazo: ${homework.due || "sem prazo definido"}</small>
+          </div>
+          <span class="pill waiting">Publicado</span>
+        </div>
+      `).join("") : "<p>Nenhuma tarefa publicada ainda.</p>";
+    }
+
+    function renderPayment() {
+      $("[data-payment-status]").textContent = paymentConfig.publicKey || paymentConfig.monthly ? "Configuração salva" : "Não conectado";
+      if (paymentConfig.publicKey) $("[name='publicKey']").value = paymentConfig.publicKey;
+      if (paymentConfig.accessToken) $("[name='accessToken']").value = paymentConfig.accessToken;
+      if (paymentConfig.webhook) $("[name='webhook']").value = paymentConfig.webhook;
+      if (paymentConfig.monthly) $("[name='monthly']").value = paymentConfig.monthly;
+      if (paymentConfig.semester) $("[name='semester']").value = paymentConfig.semester;
+      if (paymentConfig.annual) $("[name='annual']").value = paymentConfig.annual;
+    }
+
+    function renderAll() {
+      renderDashboard();
+      renderStudents();
+      renderSlots();
+      renderResources();
+      renderContracts();
+      renderHomeworks();
+      renderPayment();
+    }
+
+    $("[data-teacher-login]").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const email = form.email.value.trim().toLowerCase();
+      const password = form.password.value.trim();
+      if (email === teacherCredentials.email && password === teacherCredentials.password) {
+        sessionStorage.setItem("teacherMariaTeacher", "logged");
+        $("[data-login-screen]").classList.add("hidden");
+        $("[data-admin-app]").classList.remove("hidden");
+        renderAll();
+        return;
+      }
+      setMessage("[data-login-message]", "Acesso da professora não encontrado. Confira o email e a senha.");
+    });
+
+    if (sessionStorage.getItem("teacherMariaTeacher") === "logged") {
+      $("[data-login-screen]").classList.add("hidden");
+      $("[data-admin-app]").classList.remove("hidden");
+    }
+
+    $("[data-logout]").addEventListener("click", () => {
+      sessionStorage.removeItem("teacherMariaTeacher");
+      $("[data-admin-app]").classList.add("hidden");
+      $("[data-login-screen]").classList.remove("hidden");
+    });
+
+    $$("[data-tab]").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const id = tab.dataset.tab;
+        $$("[data-tab]").forEach((item) => item.classList.remove("active"));
+        $$("[data-panel]").forEach((panel) => panel.classList.remove("active"));
+        tab.classList.add("active");
+        $(`[data-panel="${id}"]`).classList.add("active");
+        $("[data-title]").textContent = titles[id];
+      });
+    });
+
+    $("[data-student-form]").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const student = {
+        id: makeId("student"),
+        name: form.name.value.trim(),
+        email: form.email.value.trim().toLowerCase(),
+        group: form.group.value.trim(),
+        plan: form.plan.value,
+        password: form.password.value.trim() || makePassword(form.name.value),
+        status: "Ativo"
+      };
+      students = [student, ...students];
+      writeData(storageKeys.students, students);
+      $("[data-invite-preview]").textContent = inviteText(student);
+      setMessage("[data-student-message]", "Aluno criado. Copie a mensagem de acesso e envie para ele.");
+      form.reset();
+      renderAll();
+    });
+
+    document.addEventListener("click", async (event) => {
+      const copyButton = event.target.closest("[data-copy-student]");
+      if (copyButton) {
+        const student = students.find((item) => item.id === copyButton.dataset.copyStudent);
+        const text = inviteText(student);
+        $("[data-invite-preview]").textContent = text;
+        try {
+          await navigator.clipboard.writeText(text);
+          copyButton.textContent = "Copiado";
+        } catch {
+          copyButton.textContent = "Mensagem pronta";
+        }
+      }
+
+      const removeSlot = event.target.closest("[data-remove-slot]");
+      if (removeSlot) {
+        slots = slots.filter((slot) => slot.id !== removeSlot.dataset.removeSlot);
+        writeData(storageKeys.slots, slots);
+        renderAll();
+      }
+    });
+
+    $("[data-export]").addEventListener("click", () => {
+      const payload = { students, slots, resources, contracts, homeworks, paymentConfig };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "teacher-maria-dados.json";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+
+    $("[data-payment-form]").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      paymentConfig = {
+        publicKey: form.publicKey.value.trim(),
+        accessToken: form.accessToken.value.trim(),
+        webhook: form.webhook.value.trim(),
+        monthly: form.monthly.value.trim(),
+        semester: form.semester.value.trim(),
+        annual: form.annual.value.trim()
+      };
+      writeData(storageKeys.payment, paymentConfig);
+      setMessage("[data-payment-message]", "Configuração salva no painel. A cobrança real ainda precisa de backend seguro.");
+      renderPayment();
+    });
+
+    $("[data-slot-form]").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      slots = [{
+        id: makeId("slot"),
+        date: form.date.value,
+        time: form.time.value,
+        type: form.type.value,
+        capacity: form.capacity.value
+      }, ...slots];
+      writeData(storageKeys.slots, slots);
+      form.reset();
+      renderAll();
+    });
+
+    $("[data-resource-form]").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      resources = [{
+        id: makeId("resource"),
+        title: form.title.value.trim(),
+        type: form.type.value,
+        module: form.module.value.trim(),
+        file: form.file.files[0]?.name || "",
+        instructions: form.instructions.value.trim()
+      }, ...resources];
+      writeData(storageKeys.resources, resources);
+      form.reset();
+      renderAll();
+    });
+
+    $("[data-contract-form]").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      contracts = [{
+        id: makeId("contract"),
+        student: form.student.value,
+        plan: form.plan.value,
+        file: form.file.files[0]?.name || ""
+      }, ...contracts];
+      writeData(storageKeys.contracts, contracts);
+      form.reset();
+      renderAll();
+    });
+
+    $("[data-homework-form]").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      homeworks = [{
+        id: makeId("homework"),
+        title: form.title.value.trim(),
+        due: form.due.value,
+        instructions: form.instructions.value.trim()
+      }, ...homeworks];
+      writeData(storageKeys.homeworks, homeworks);
+      form.reset();
+      renderAll();
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>
