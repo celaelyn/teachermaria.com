@@ -160,6 +160,22 @@
       min-height: 120px;
       resize: vertical;
     }
+    .password-field {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+    .password-field input { min-width: 0; }
+    .icon-btn {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 12px;
+      color: var(--brown);
+      background: var(--paper-2);
+      font-weight: 900;
+    }
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -183,6 +199,20 @@
       line-height: 1.5;
     }
     .message.visible { display: block; }
+    .invite-text {
+      min-height: 190px;
+      white-space: pre-wrap;
+    }
+    .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .action-group .btn {
+      min-height: 36px;
+      padding: 8px 12px;
+      font-size: .86rem;
+    }
     .access-note {
       margin-top: 18px !important;
       border-radius: 8px;
@@ -341,6 +371,90 @@
     }
     .row-card strong { color: var(--brown); }
     .row-card small { color: var(--muted); }
+    .calendar-shell {
+      display: grid;
+      gap: 14px;
+    }
+    .calendar-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--paper-2);
+    }
+    .calendar-toolbar strong {
+      color: var(--brown);
+      font-size: 1.08rem;
+      text-transform: capitalize;
+    }
+    .calendar-nav {
+      display: flex;
+      gap: 8px;
+    }
+    .calendar-nav button {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--brown);
+      background: #fffdf6;
+      font-weight: 950;
+    }
+    .calendar-weekdays,
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .calendar-weekdays span {
+      color: var(--brown);
+      font-size: .76rem;
+      font-weight: 950;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .calendar-day {
+      min-height: 116px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      color: var(--ink);
+      background: var(--paper);
+      text-align: left;
+    }
+    .calendar-day.muted {
+      opacity: .45;
+      background: #fff7e5;
+    }
+    .calendar-day.has-slots {
+      border-color: rgba(47, 122, 62, .35);
+      background: var(--green-bg);
+    }
+    .calendar-day strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--brown);
+      font-size: 1rem;
+    }
+    .calendar-day small {
+      display: block;
+      color: var(--muted);
+      font-weight: 750;
+      line-height: 1.4;
+    }
+    .slot-chip {
+      display: inline-flex;
+      margin: 2px 4px 2px 0;
+      border-radius: 999px;
+      padding: 5px 8px;
+      color: var(--green);
+      background: #d9f0d3;
+      font-size: .76rem;
+      font-weight: 900;
+    }
     .settings-box {
       display: grid;
       gap: 12px;
@@ -376,6 +490,11 @@
       .login-card-wrap { padding: 20px; }
       .topbar, .form-actions, .row-card { align-items: stretch; flex-direction: column; }
       .form-grid { grid-template-columns: 1fr; }
+      .calendar-weekdays,
+      .calendar-grid { gap: 5px; }
+      .calendar-day { min-height: 84px; padding: 8px; }
+      .calendar-day small { display: none; }
+      .slot-chip { font-size: .68rem; padding: 4px 6px; }
       .btn { width: 100%; }
     }
   </style>
@@ -399,19 +518,21 @@
       <form class="login-card" data-teacher-login>
         <p class="eyebrow">Acesso da professora</p>
         <h2>Entrar no painel</h2>
-        <p>Use o acesso de teste para visualizar o painel administrativo.</p>
+        <p>Entre com seu acesso de professora para administrar alunos, tarefas, pagamentos e materiais.</p>
         <label style="margin-top:16px">Email
           <input type="email" name="email" placeholder="professora@teachermaria.com" autocomplete="email" required>
         </label>
         <label style="margin-top:12px">Senha
-          <input type="password" name="password" placeholder="Sua senha" autocomplete="current-password" required>
+          <span class="password-field">
+            <input type="password" name="password" placeholder="Sua senha" autocomplete="current-password" required>
+            <button class="icon-btn" type="button" data-toggle-password>Ver</button>
+          </span>
         </label>
         <div class="form-actions">
           <button class="btn" type="submit">Acessar painel</button>
           <a class="btn secondary" href="portal.html">Portal do aluno</a>
         </div>
         <p class="message" data-login-message></p>
-        <p class="access-note">Acesso de teste: <strong>professora@teachermaria.com</strong> | Senha: <strong>admin2026</strong></p>
       </form>
     </div>
   </section>
@@ -495,7 +616,7 @@
             <form data-student-form>
               <div class="form-grid">
                 <label>Nome do aluno
-                  <input name="name" placeholder="Ex.: Ana Martins" required>
+                  <input name="name" placeholder="Ex.: Camila Souza" required>
                 </label>
                 <label>Email
                   <input type="email" name="email" placeholder="ana@email.com" required>
@@ -511,21 +632,33 @@
                   </select>
                 </label>
                 <label class="full">Senha inicial
-                  <input name="password" placeholder="Deixe em branco para gerar automaticamente">
+                  <span class="password-field">
+                    <input name="password" type="password" placeholder="Deixe em branco para gerar automaticamente">
+                    <button class="icon-btn" type="button" data-toggle-password>Ver</button>
+                  </span>
                 </label>
               </div>
               <div class="form-actions">
                 <button class="btn" type="submit">Criar acesso</button>
+                <button class="btn secondary" type="button" data-generate-student-password>Gerar senha</button>
                 <button class="btn secondary" type="button" data-export>Exportar dados</button>
               </div>
             </form>
             <p class="message" data-student-message></p>
+            <div class="warning" style="margin-top:14px">Nesta versão, os acessos ficam salvos somente neste navegador. A conexão com banco de dados tornará o mesmo login disponível em qualquer celular ou computador.</div>
           </article>
 
           <article class="card">
             <p class="eyebrow">Convite</p>
             <h2>Mensagem para enviar</h2>
-            <p data-invite-preview>Crie um aluno para gerar a mensagem com email, senha e link do portal.</p>
+            <label style="margin-bottom:12px">Link oficial do portal
+              <input data-portal-link value="https://project-qubud.vercel.app/portal.html">
+            </label>
+            <textarea class="invite-text" data-invite-preview readonly>Crie um aluno ou selecione um aluno cadastrado para gerar a mensagem com email, senha e link do portal.</textarea>
+            <div class="form-actions">
+              <button class="btn" type="button" data-email-invite disabled>Enviar por e-mail</button>
+              <button class="btn secondary" type="button" data-copy-invite disabled>Copiar mensagem</button>
+            </div>
           </article>
         </div>
 
@@ -557,6 +690,9 @@
             <div class="warning">Não coloque token real em site estático publicado. Na versão real, as chaves secretas ficam protegidas no servidor.</div>
             <form data-payment-form style="margin-top:14px">
               <div class="form-grid">
+                <label class="full">Aluno que receberá a cobrança
+                  <select name="student" data-student-options-payments></select>
+                </label>
                 <label>Public Key
                   <input name="publicKey" placeholder="APP_USR-...">
                 </label>
@@ -575,9 +711,13 @@
                 <label class="full">Link anual
                   <input name="annual" placeholder="Cole o link de pagamento anual">
                 </label>
+                <label class="full">Mensagem da cobrança
+                  <textarea name="paymentMessage" placeholder="Ex.: Olá! Seu pagamento do plano semestral já está disponível."></textarea>
+                </label>
               </div>
               <div class="form-actions">
                 <button class="btn" type="submit">Salvar configuração</button>
+                <button class="btn secondary" type="button" data-email-payment>Enviar cobrança por e-mail</button>
               </div>
             </form>
             <p class="message" data-payment-message></p>
@@ -629,7 +769,22 @@
           </article>
 
           <article class="card">
-            <h2>Horários disponíveis</h2>
+            <h2>Calendário de reposições</h2>
+            <div class="calendar-shell" style="margin-top:12px">
+              <div class="calendar-toolbar">
+                <button class="btn secondary" type="button" data-calendar-today>Hoje</button>
+                <strong data-calendar-label>Calendário</strong>
+                <div class="calendar-nav">
+                  <button type="button" data-calendar-prev aria-label="Mês anterior">&lt;</button>
+                  <button type="button" data-calendar-next aria-label="Próximo mês">&gt;</button>
+                </div>
+              </div>
+              <div class="calendar-weekdays" aria-hidden="true">
+                <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+              </div>
+              <div class="calendar-grid" data-calendar></div>
+            </div>
+            <h3 style="margin-top:18px">Lista de horários</h3>
             <div class="list" data-slots-list></div>
           </article>
         </div>
@@ -717,6 +872,9 @@
             <h2>Criar tarefa</h2>
             <form data-homework-form>
               <div class="form-grid">
+                <label class="full">Aluno que receberá a tarefa
+                  <select name="student" data-student-options-homework></select>
+                </label>
                 <label>Título
                   <input name="title" placeholder="Writing: My weekly routine" required>
                 </label>
@@ -729,6 +887,7 @@
               </div>
               <div class="form-actions">
                 <button class="btn" type="submit">Publicar tarefa</button>
+                <button class="btn secondary" type="button" data-email-homework>Enviar por e-mail</button>
               </div>
             </form>
           </article>
@@ -768,22 +927,11 @@
     };
 
     const defaults = {
-      students: [
-        { id: "student-ana", name: "Ana Martins", email: "aluno@teachermaria.com", password: "maria2026", group: "Mondays 18h", plan: "Semestral", status: "Ativo" }
-      ],
-      slots: [
-        { id: "slot-1", date: "2026-06-29", time: "18:00", type: "Reposição", capacity: "1" },
-        { id: "slot-2", date: "2026-07-01", time: "20:00", type: "Reposição", capacity: "1" }
-      ],
-      resources: [
-        { id: "resource-1", title: "Listening: ordering politely", type: "Listening", module: "Comunicação", file: "audio-demo.mp3", instructions: "Ouça e anote cinco expressões úteis." }
-      ],
-      contracts: [
-        { id: "contract-1", student: "Ana Martins", plan: "Semestral", file: "contrato-ana-martins.pdf" }
-      ],
-      homeworks: [
-        { id: "homework-1", title: "Writing: My weekly routine", due: "2026-06-26T22:00", instructions: "Escreva pelo menos 35 palavras usando usually, often e sometimes." }
-      ]
+      students: [],
+      slots: [],
+      resources: [],
+      contracts: [],
+      homeworks: []
     };
 
     const $ = (selector) => document.querySelector(selector);
@@ -791,7 +939,12 @@
 
     function readData(key, fallback) {
       const saved = localStorage.getItem(key);
-      return saved ? JSON.parse(saved) : fallback;
+      if (!saved) return fallback;
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return fallback;
+      }
     }
 
     function writeData(key, value) {
@@ -820,8 +973,48 @@
       return `${clean}${Math.floor(1000 + Math.random() * 9000)}`;
     }
 
+    let selectedInviteStudentId = "";
+
+    function portalLink() {
+      return $("[data-portal-link]").value.trim() || "https://project-qubud.vercel.app/portal.html";
+    }
+
+    function studentByEmail(email) {
+      return students.find((student) => student.email === email);
+    }
+
     function inviteText(student) {
-      return `Olá, ${student.name}! Seu acesso ao portal da Teacher Maria foi criado.\n\nLink: portal.html\nEmail: ${student.email}\nSenha: ${student.password}\nTurma: ${student.group}`;
+      return `Olá, ${student.name}! Tudo bem?
+
+Seu acesso ao Portal do Aluno da Teacher Maria Nascimento foi criado.
+
+Link do portal:
+${portalLink()}
+
+Dados de acesso:
+Email: ${student.email}
+Senha provisória: ${student.password}
+
+Turma: ${student.group}
+Plano: ${student.plan}
+
+Ao entrar, você poderá acompanhar suas aulas, tarefas, Método ABC, recursos extras, reposições, contrato e pagamentos.
+
+Com carinho,
+Teacher Maria Nascimento`;
+    }
+
+    function prepareInvite(student) {
+      if (!student) return;
+      selectedInviteStudentId = student.id;
+      $("[data-invite-preview]").value = inviteText(student);
+      $("[data-email-invite]").disabled = false;
+      $("[data-copy-invite]").disabled = false;
+    }
+
+    function sendEmail(to, subject, body) {
+      const url = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = url;
     }
 
     function setMessage(selector, text) {
@@ -837,21 +1030,86 @@
     }
 
     function renderStudents() {
-      $("[data-students-table]").innerHTML = students.map((student) => `
+      $("[data-students-table]").innerHTML = students.length ? students.map((student) => `
         <tr>
           <td><strong>${student.name}</strong></td>
           <td>${student.email}<br><small>Senha: ${student.password}</small></td>
           <td>${student.group}</td>
           <td>${student.plan}</td>
           <td><span class="pill good">${student.status}</span></td>
-          <td><button class="btn secondary" type="button" data-copy-student="${student.id}">Copiar acesso</button></td>
+          <td>
+            <div class="action-group">
+              <button class="btn secondary" type="button" data-email-student="${student.id}">E-mail</button>
+              <button class="btn secondary" type="button" data-copy-student="${student.id}">Copiar</button>
+              <button class="btn secondary" type="button" data-reset-student="${student.id}">Nova senha</button>
+              <button class="btn danger" type="button" data-delete-student="${student.id}">Apagar</button>
+            </div>
+          </td>
         </tr>
-      `).join("");
+      `).join("") : `
+        <tr>
+          <td colspan="6">Nenhum aluno cadastrado ainda.</td>
+        </tr>
+      `;
 
-      $("[data-student-options]").innerHTML = students.map((student) => `<option>${student.name}</option>`).join("");
+      const options = students.length
+        ? students.map((student) => `<option value="${student.email}">${student.name} - ${student.email}</option>`).join("")
+        : "<option value=''>Nenhum aluno cadastrado</option>";
+      $$("[data-student-options], [data-student-options-payments], [data-student-options-homework]").forEach((select) => {
+        select.innerHTML = options;
+      });
+    }
+
+    function parseSlotDate(value) {
+      const [year, month, day] = value.split("-").map(Number);
+      return new Date(year, month - 1, day);
+    }
+
+    function dateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function monthLabel(date) {
+      return date.toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
+    }
+
+    function initialSlotMonth() {
+      const firstSlot = [...slots].sort((a, b) => a.date.localeCompare(b.date))[0];
+      const base = firstSlot ? parseSlotDate(firstSlot.date) : new Date();
+      return new Date(base.getFullYear(), base.getMonth(), 1);
+    }
+
+    let professorCalendarDate = initialSlotMonth();
+
+    function renderSlotCalendar() {
+      const year = professorCalendarDate.getFullYear();
+      const month = professorCalendarDate.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const gridStart = new Date(year, month, 1 - firstDay.getDay());
+
+      $("[data-calendar-label]").textContent = monthLabel(professorCalendarDate);
+      $("[data-calendar]").innerHTML = Array.from({ length: 42 }, (_, index) => {
+        const day = new Date(gridStart);
+        day.setDate(gridStart.getDate() + index);
+        const key = dateKey(day);
+        const daySlots = slots.filter((slot) => slot.date === key).sort((a, b) => a.time.localeCompare(b.time));
+        const isCurrentMonth = day.getMonth() === month;
+        return `
+          <div class="calendar-day ${isCurrentMonth ? "" : "muted"} ${daySlots.length ? "has-slots" : ""}">
+            <strong>${day.getDate()}</strong>
+            ${daySlots.length
+              ? daySlots.slice(0, 4).map((slot) => `<span class="slot-chip">${slot.time}</span>`).join("")
+              : "<small>Sem horário</small>"}
+          </div>
+        `;
+      }).join("");
     }
 
     function renderSlots() {
+      renderSlotCalendar();
       $("[data-slots-list]").innerHTML = slots.length ? slots.map((slot) => `
         <div class="row-card">
           <div>
@@ -892,7 +1150,7 @@
         <div class="row-card">
           <div>
             <strong>${homework.title}</strong><br>
-            <small>Prazo: ${homework.due || "sem prazo definido"}</small>
+            <small>${homework.studentName || "Aluno não definido"} | Prazo: ${homework.due || "sem prazo definido"}</small>
           </div>
           <span class="pill waiting">Publicado</span>
         </div>
@@ -907,6 +1165,8 @@
       if (paymentConfig.monthly) $("[name='monthly']").value = paymentConfig.monthly;
       if (paymentConfig.semester) $("[name='semester']").value = paymentConfig.semester;
       if (paymentConfig.annual) $("[name='annual']").value = paymentConfig.annual;
+      if (paymentConfig.student) $("[data-student-options-payments]").value = paymentConfig.student;
+      if (paymentConfig.paymentMessage) $("[name='paymentMessage']").value = paymentConfig.paymentMessage;
     }
 
     function renderAll() {
@@ -956,22 +1216,76 @@
       });
     });
 
+    $("[data-calendar-prev]").addEventListener("click", () => {
+      professorCalendarDate = new Date(professorCalendarDate.getFullYear(), professorCalendarDate.getMonth() - 1, 1);
+      renderSlotCalendar();
+    });
+
+    $("[data-calendar-next]").addEventListener("click", () => {
+      professorCalendarDate = new Date(professorCalendarDate.getFullYear(), professorCalendarDate.getMonth() + 1, 1);
+      renderSlotCalendar();
+    });
+
+    $("[data-calendar-today]").addEventListener("click", () => {
+      const today = new Date();
+      professorCalendarDate = new Date(today.getFullYear(), today.getMonth(), 1);
+      renderSlotCalendar();
+    });
+
+    $$("[data-toggle-password]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const input = button.closest(".password-field").querySelector("input");
+        const shouldShow = input.type === "password";
+        input.type = shouldShow ? "text" : "password";
+        button.textContent = shouldShow ? "Ocultar" : "Ver";
+      });
+    });
+
+    $("[data-generate-student-password]").addEventListener("click", () => {
+      const form = $("[data-student-form]");
+      form.password.value = makePassword(form.name.value || "aluno");
+      form.password.type = "text";
+    });
+
+    $("[data-copy-invite]").addEventListener("click", async () => {
+      const text = $("[data-invite-preview]").value;
+      if (!text.trim()) return;
+      try {
+        await navigator.clipboard.writeText(text);
+        $("[data-copy-invite]").textContent = "Copiado";
+      } catch {
+        $("[data-copy-invite]").textContent = "Mensagem pronta";
+      }
+    });
+
+    $("[data-email-invite]").addEventListener("click", () => {
+      const student = students.find((item) => item.id === selectedInviteStudentId);
+      if (!student) return;
+      sendEmail(student.email, "Seu acesso ao Portal do Aluno", inviteText(student));
+    });
+
     $("[data-student-form]").addEventListener("submit", (event) => {
       event.preventDefault();
       const form = event.currentTarget;
+      const email = form.email.value.trim().toLowerCase();
+      if (studentByEmail(email)) {
+        setMessage("[data-student-message]", "Já existe um aluno cadastrado com este e-mail.");
+        return;
+      }
       const student = {
         id: makeId("student"),
         name: form.name.value.trim(),
-        email: form.email.value.trim().toLowerCase(),
+        email,
         group: form.group.value.trim(),
         plan: form.plan.value,
         password: form.password.value.trim() || makePassword(form.name.value),
-        status: "Ativo"
+        status: "Ativo",
+        createdAt: new Date().toISOString()
       };
       students = [student, ...students];
       writeData(storageKeys.students, students);
-      $("[data-invite-preview]").textContent = inviteText(student);
-      setMessage("[data-student-message]", "Aluno criado. Copie a mensagem de acesso e envie para ele.");
+      prepareInvite(student);
+      setMessage("[data-student-message]", "Aluno criado. Agora você pode enviar o acesso por e-mail ou copiar a mensagem.");
       form.reset();
       renderAll();
     });
@@ -981,13 +1295,48 @@
       if (copyButton) {
         const student = students.find((item) => item.id === copyButton.dataset.copyStudent);
         const text = inviteText(student);
-        $("[data-invite-preview]").textContent = text;
+        prepareInvite(student);
         try {
           await navigator.clipboard.writeText(text);
           copyButton.textContent = "Copiado";
         } catch {
           copyButton.textContent = "Mensagem pronta";
         }
+      }
+
+      const emailButton = event.target.closest("[data-email-student]");
+      if (emailButton) {
+        const student = students.find((item) => item.id === emailButton.dataset.emailStudent);
+        prepareInvite(student);
+        sendEmail(student.email, "Seu acesso ao Portal do Aluno", inviteText(student));
+      }
+
+      const resetButton = event.target.closest("[data-reset-student]");
+      if (resetButton) {
+        const student = students.find((item) => item.id === resetButton.dataset.resetStudent);
+        student.password = makePassword(student.name);
+        writeData(storageKeys.students, students);
+        prepareInvite(student);
+        renderAll();
+        sendEmail(student.email, "Nova senha do Portal do Aluno", inviteText(student));
+      }
+
+      const deleteButton = event.target.closest("[data-delete-student]");
+      if (deleteButton) {
+        const student = students.find((item) => item.id === deleteButton.dataset.deleteStudent);
+        const confirmed = confirm(`Apagar o aluno ${student.name}? Essa ação remove o login salvo neste painel.`);
+        if (!confirmed) return;
+        students = students.filter((item) => item.id !== student.id);
+        contracts = contracts.filter((item) => item.studentEmail !== student.email && item.student !== student.name);
+        homeworks = homeworks.filter((item) => item.studentEmail !== student.email);
+        writeData(storageKeys.students, students);
+        writeData(storageKeys.contracts, contracts);
+        writeData(storageKeys.homeworks, homeworks);
+        selectedInviteStudentId = "";
+        $("[data-invite-preview]").value = "Crie um aluno ou selecione um aluno cadastrado para gerar a mensagem com email, senha e link do portal.";
+        $("[data-email-invite]").disabled = true;
+        $("[data-copy-invite]").disabled = true;
+        renderAll();
       }
 
       const removeSlot = event.target.closest("[data-remove-slot]");
@@ -1008,25 +1357,60 @@
       URL.revokeObjectURL(link.href);
     });
 
+    function paymentLinkForStudent(student, form) {
+      const plan = student?.plan || "";
+      if (plan === "Anual") return form.annual.value.trim();
+      if (plan === "Semestral") return form.semester.value.trim();
+      return form.monthly.value.trim();
+    }
+
+    function paymentEmailText(student, form) {
+      const link = paymentLinkForStudent(student, form) || "Link de pagamento ainda não informado.";
+      const customMessage = form.paymentMessage.value.trim();
+      return `${customMessage || `Olá, ${student.name}! Seu pagamento das aulas de inglês já está disponível.`}
+
+Aluno: ${student.name}
+Plano: ${student.plan}
+Link de pagamento:
+${link}
+
+Qualquer dúvida, me avise.
+
+Teacher Maria Nascimento`;
+    }
+
     $("[data-payment-form]").addEventListener("submit", (event) => {
       event.preventDefault();
       const form = event.currentTarget;
       paymentConfig = {
+        student: form.student.value,
         publicKey: form.publicKey.value.trim(),
         accessToken: form.accessToken.value.trim(),
         webhook: form.webhook.value.trim(),
         monthly: form.monthly.value.trim(),
         semester: form.semester.value.trim(),
-        annual: form.annual.value.trim()
+        annual: form.annual.value.trim(),
+        paymentMessage: form.paymentMessage.value.trim()
       };
       writeData(storageKeys.payment, paymentConfig);
-      setMessage("[data-payment-message]", "Configuração salva no painel. A cobrança real ainda precisa de backend seguro.");
+      setMessage("[data-payment-message]", "Configuração salva. Para envio automático real e confirmação de pagamento, ainda será necessário backend seguro.");
       renderPayment();
+    });
+
+    $("[data-email-payment]").addEventListener("click", () => {
+      const form = $("[data-payment-form]");
+      const student = studentByEmail(form.student.value);
+      if (!student) {
+        setMessage("[data-payment-message]", "Cadastre ou selecione um aluno antes de enviar a cobrança.");
+        return;
+      }
+      sendEmail(student.email, "Pagamento das aulas de inglês", paymentEmailText(student, form));
     });
 
     $("[data-slot-form]").addEventListener("submit", (event) => {
       event.preventDefault();
       const form = event.currentTarget;
+      const slotDate = parseSlotDate(form.date.value);
       slots = [{
         id: makeId("slot"),
         date: form.date.value,
@@ -1034,6 +1418,7 @@
         type: form.type.value,
         capacity: form.capacity.value
       }, ...slots];
+      professorCalendarDate = new Date(slotDate.getFullYear(), slotDate.getMonth(), 1);
       writeData(storageKeys.slots, slots);
       form.reset();
       renderAll();
@@ -1058,9 +1443,11 @@
     $("[data-contract-form]").addEventListener("submit", (event) => {
       event.preventDefault();
       const form = event.currentTarget;
+      const student = studentByEmail(form.student.value);
       contracts = [{
         id: makeId("contract"),
-        student: form.student.value,
+        student: student?.name || form.student.value,
+        studentEmail: student?.email || form.student.value,
         plan: form.plan.value,
         file: form.file.files[0]?.name || ""
       }, ...contracts];
@@ -1069,11 +1456,41 @@
       renderAll();
     });
 
+    function homeworkEmailText(student, form) {
+      return `Olá, ${student.name}!
+
+Uma nova tarefa foi publicada para você no Portal do Aluno.
+
+Tarefa: ${form.title.value.trim()}
+Prazo: ${form.due.value}
+
+Instruções:
+${form.instructions.value.trim()}
+
+Acesse o portal:
+${portalLink()}
+
+Teacher Maria Nascimento`;
+    }
+
+    $("[data-email-homework]").addEventListener("click", () => {
+      const form = $("[data-homework-form]");
+      if (!form.reportValidity()) return;
+      const student = studentByEmail(form.student.value);
+      if (!student) return;
+      sendEmail(student.email, "Nova homework no Portal do Aluno", homeworkEmailText(student, form));
+    });
+
     $("[data-homework-form]").addEventListener("submit", (event) => {
       event.preventDefault();
       const form = event.currentTarget;
+      const student = studentByEmail(form.student.value);
+      if (!student) return;
       homeworks = [{
         id: makeId("homework"),
+        createdAt: new Date().toISOString(),
+        studentEmail: student.email,
+        studentName: student.name,
         title: form.title.value.trim(),
         due: form.due.value,
         instructions: form.instructions.value.trim()

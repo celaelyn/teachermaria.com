@@ -157,6 +157,22 @@
       padding: 12px;
       background: #fffdf6;
     }
+    .password-field {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+    .password-field input { min-width: 0; }
+    .icon-btn {
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0 12px;
+      color: var(--brown);
+      background: #fff9ea;
+      font-weight: 900;
+    }
     .login-actions { display: grid; gap: 12px; margin-top: 18px; }
     .login-message {
       display: none;
@@ -169,13 +185,23 @@
       line-height: 1.5;
     }
     .login-message.visible { display: block; }
-    .access-note {
-      margin-top: 18px !important;
-      border-radius: 12px;
-      padding: 12px;
-      background: #fff4dc;
-      font-size: .92rem;
+    dialog {
+      width: min(92vw, 460px);
+      border: 0;
+      border-radius: 18px;
+      padding: 0;
+      color: var(--ink);
+      background: #fffaf0;
+      box-shadow: var(--shadow);
     }
+    dialog::backdrop { background: rgba(26, 10, 4, .58); }
+    .confirm-modal {
+      display: grid;
+      gap: 14px;
+      padding: 24px;
+    }
+    .confirm-modal h2 { margin: 0; color: var(--brown); }
+    .confirm-modal p { margin: 0; color: #684938; line-height: 1.65; }
 
     .portal-app {
       min-height: 100vh;
@@ -444,6 +470,127 @@
       color: #fff4dc;
       background: var(--brown);
     }
+    .calendar-shell {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .calendar-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: #fff9ea;
+    }
+    .calendar-toolbar strong {
+      color: var(--brown);
+      font-size: 1.08rem;
+      text-transform: capitalize;
+    }
+    .calendar-nav {
+      display: flex;
+      gap: 8px;
+    }
+    .calendar-nav button {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--brown);
+      background: #fffdf6;
+      font-weight: 950;
+    }
+    .calendar-weekdays,
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .calendar-weekdays span {
+      color: var(--brown);
+      font-size: .78rem;
+      font-weight: 950;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .calendar-day {
+      min-height: 116px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px;
+      color: var(--ink);
+      background: #fffaf0;
+      text-align: left;
+    }
+    .calendar-day.muted {
+      opacity: .45;
+      background: #fff7e5;
+    }
+    .calendar-day.has-slots {
+      border-color: rgba(47, 122, 62, .35);
+      background: #f3faef;
+    }
+    .calendar-day.selected {
+      color: #fff4dc;
+      background: var(--brown);
+      border-color: var(--brown);
+    }
+    .calendar-day strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+    .calendar-day small {
+      display: block;
+      color: #8a6a57;
+      font-weight: 750;
+      line-height: 1.4;
+    }
+    .calendar-day.selected small { color: rgba(255, 244, 220, .82); }
+    .slot-chip {
+      display: inline-flex;
+      margin: 2px 4px 2px 0;
+      border-radius: 999px;
+      padding: 5px 8px;
+      color: var(--green);
+      background: var(--green-bg);
+      font-size: .76rem;
+      font-weight: 900;
+    }
+    .calendar-day.selected .slot-chip {
+      color: var(--brown);
+      background: var(--gold);
+    }
+    .day-slots {
+      display: grid;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff9ea;
+    }
+    .day-slots h3 { margin: 0; color: var(--brown); }
+    .slot-choice {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--brown);
+      background: #fffdf6;
+      font-weight: 850;
+      text-align: left;
+    }
+    .slot-choice.selected {
+      color: #fff4dc;
+      background: var(--brown);
+      border-color: var(--brown);
+    }
     .billing-row {
       display: flex;
       align-items: center;
@@ -471,6 +618,11 @@
       .login-copy, .login-panel-wrap { min-height: auto; }
       .topbar, .billing-row { align-items: stretch; flex-direction: column; }
       .slots, .resource, .homework-row { grid-template-columns: 1fr; }
+      .calendar-weekdays,
+      .calendar-grid { gap: 5px; }
+      .calendar-day { min-height: 82px; padding: 8px; }
+      .calendar-day small { display: none; }
+      .slot-chip { font-size: .68rem; padding: 4px 6px; }
       .btn { width: 100%; }
     }
   </style>
@@ -495,20 +647,23 @@
       <form class="login-card" data-login-form>
         <p class="eyebrow">Acesso do aluno</p>
         <h2>Entrar no portal</h2>
-        <p>Use o acesso cadastrado pela professora. Nesta versão inicial, deixei um acesso de teste para você visualizar o fluxo completo.</p>
+        <p>Use o acesso enviado pela professora para entrar no portal.</p>
         <label>Email
           <input type="email" name="email" placeholder="seuemail@exemplo.com" autocomplete="email" required>
         </label>
         <label>Senha
-          <input type="password" name="password" placeholder="Sua senha" autocomplete="current-password" required>
+          <span class="password-field">
+            <input type="password" name="password" placeholder="Sua senha" autocomplete="current-password" required>
+            <button class="icon-btn" type="button" data-toggle-password>Ver</button>
+          </span>
         </label>
         <div class="login-actions">
           <button class="btn" type="submit">Acessar portal</button>
+          <button class="btn secondary" type="button" data-forgot-password>Esqueci minha senha</button>
           <a class="btn secondary" href="index.html">Voltar ao site</a>
           <a class="btn secondary" href="professor.html">Sou professora</a>
         </div>
         <p class="login-message" data-login-message></p>
-        <p class="access-note">Acesso de teste: <strong>aluno@teachermaria.com</strong> | Senha: <strong>maria2026</strong></p>
       </form>
     </div>
   </section>
@@ -520,10 +675,10 @@
         <span>Portal</span>
       </a>
       <div class="student-card">
-        <span class="avatar" data-student-avatar>AM</span>
+        <span class="avatar" data-student-avatar>AL</span>
         <div>
-          <strong data-student-name>Ana Martins</strong>
-          <small data-student-group>Turma: Mondays 18h</small>
+          <strong data-student-name>Aluno</strong>
+          <small data-student-group>Turma: a definir</small>
         </div>
       </div>
       <button class="nav-button active" type="button" data-tab="painel">Painel</button>
@@ -660,10 +815,10 @@
 
       <section class="panel" data-panel="homework">
         <div class="grid-2">
-          <article class="card">
+          <article class="card" data-current-homework>
             <p class="eyebrow">Homework pendente</p>
-            <h2>Writing: My weekly routine</h2>
-            <p>Escreva pelo menos 35 palavras usando usually, often e sometimes.</p>
+            <h2 data-homework-title>Sem homework pendente</h2>
+            <p data-homework-instructions>Quando a professora publicar uma tarefa para você, ela aparecerá aqui.</p>
             <textarea data-answer placeholder="Cole ou escreva sua resposta aqui"></textarea>
             <button class="btn" type="button" data-correct>Enviar homework</button>
           </article>
@@ -674,11 +829,8 @@
           </article>
         </div>
         <article class="card" style="margin-top:16px">
-          <h3>Homeworks anteriores</h3>
-          <div class="homework-list">
-            <div class="homework-row"><span class="pill good">Corrigido</span><div><strong>Introducing myself</strong><br><small>Nota: 91/100</small></div><button class="btn secondary" type="button">Ver feedback</button></div>
-            <div class="homework-row"><span class="pill good">Corrigido</span><div><strong>My favorite place</strong><br><small>Nota: 84/100</small></div><button class="btn secondary" type="button">Ver feedback</button></div>
-          </div>
+          <h3>Homeworks publicados</h3>
+          <div class="homework-list" data-homework-list></div>
         </article>
       </section>
 
@@ -704,11 +856,23 @@
           <p class="eyebrow">Reposições</p>
           <h2>Solicitar novo horário</h2>
           <p>Escolha um horário disponível e confirme a solicitação. A professora te responderá em até 48 horas.</p>
-          <div class="slots" style="margin-top:16px" data-slots>
-            <button class="slot" type="button">Seg 18:00</button>
-            <button class="slot" type="button">Qua 20:00</button>
-            <button class="slot" type="button">Sex 17:30</button>
-            <button class="slot" type="button">Sab 10:00</button>
+          <div class="calendar-shell">
+            <div class="calendar-toolbar">
+              <button class="btn secondary" type="button" data-calendar-today>Hoje</button>
+              <strong data-calendar-label>Calendário</strong>
+              <div class="calendar-nav">
+                <button type="button" data-calendar-prev aria-label="Mês anterior">&lt;</button>
+                <button type="button" data-calendar-next aria-label="Próximo mês">&gt;</button>
+              </div>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+            </div>
+            <div class="calendar-grid" data-calendar></div>
+            <div class="day-slots" data-day-slots>
+              <h3>Escolha uma data</h3>
+              <p>Os horários disponíveis aparecerão aqui depois que você selecionar um dia no calendário.</p>
+            </div>
           </div>
           <button class="btn" type="button" data-confirm-slot disabled>Confirmar solicitação</button>
           <p class="message-box" data-status>Selecione um horário para solicitar reposição.</p>
@@ -756,17 +920,19 @@
     </main>
   </section>
 
-  <script>
-    const demoStudent = {
-      id: "student-ana",
-      name: "Ana Martins",
-      email: "aluno@teachermaria.com",
-      password: "maria2026",
-      group: "Mondays 18h",
-      plan: "Semestral",
-      status: "Ativo"
-    };
+  <dialog data-slot-dialog>
+    <div class="confirm-modal">
+      <p class="eyebrow">Confirmar reposição</p>
+      <h2>Você tem certeza?</h2>
+      <p data-slot-dialog-text>Confirme o horário selecionado.</p>
+      <div class="login-actions">
+        <button class="btn" type="button" data-final-confirm-slot>Confirmar horário</button>
+        <button class="btn secondary" type="button" data-cancel-slot>Cancelar</button>
+      </div>
+    </div>
+  </dialog>
 
+  <script>
     const titles = {
       painel: "Painel da semana",
       abc: "Método ABC",
@@ -782,9 +948,12 @@
 
     function getStudents() {
       const saved = localStorage.getItem("teacherMariaStudents");
-      if (!saved) return [demoStudent];
-      const students = JSON.parse(saved);
-      return students.length ? students : [demoStudent];
+      if (!saved) return [];
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return [];
+      }
     }
 
     function findStudentByLogin(email, password) {
@@ -792,20 +961,73 @@
     }
 
     function findStudentByEmail(email) {
-      return getStudents().find((student) => student.email === email) || demoStudent;
+      return getStudents().find((student) => student.email === email) || null;
     }
 
     function initials(name) {
-      return name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toUpperCase() || "AM";
+      return name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toUpperCase() || "AL";
     }
 
-    function showPortal(student = demoStudent) {
+    function getPortalHomeworks() {
+      const saved = localStorage.getItem("teacherMariaHomeworks");
+      if (!saved) return [];
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return [];
+      }
+    }
+
+    function formatHomeworkDate(value) {
+      if (!value) return "Sem prazo definido";
+      const parsed = new Date(value.includes("T") ? value : `${value}T12:00:00`);
+      return value.includes("T")
+        ? parsed.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })
+        : parsed.toLocaleDateString("pt-BR");
+    }
+
+    function renderPortalHomeworks(studentEmail) {
+      const homeworks = getPortalHomeworks()
+        .filter((homework) => homework.studentEmail?.toLowerCase() === studentEmail.toLowerCase())
+        .sort((a, b) => String(b.createdAt || b.id).localeCompare(String(a.createdAt || a.id)));
+      const current = homeworks[0];
+      const submitButton = document.querySelector("[data-correct]");
+      const answer = document.querySelector("[data-answer]");
+
+      if (!current) {
+        document.querySelector("[data-homework-title]").textContent = "Sem homework pendente";
+        document.querySelector("[data-homework-instructions]").textContent = "Quando a professora publicar uma tarefa para você, ela aparecerá aqui.";
+        document.querySelector("[data-homework-list]").innerHTML = "<p>Nenhuma tarefa foi publicada para você.</p>";
+        submitButton.disabled = true;
+        answer.disabled = true;
+        return;
+      }
+
+      document.querySelector("[data-homework-title]").textContent = current.title;
+      document.querySelector("[data-homework-instructions]").textContent = `${current.instructions || "Confira as orientações enviadas pela professora."} Prazo: ${formatHomeworkDate(current.due)}.`;
+      document.querySelector("[data-homework-list]").innerHTML = homeworks.map((homework) => `
+        <article class="homework-row">
+          <span class="play">HW</span>
+          <div>
+            <strong>${homework.title}</strong><br>
+            <small>Prazo: ${formatHomeworkDate(homework.due)}</small>
+          </div>
+          <span class="pill waiting">Pendente</span>
+        </article>
+      `).join("");
+      submitButton.disabled = false;
+      answer.disabled = false;
+    }
+
+    function showPortal(student) {
+      if (!student) return;
       document.querySelector("[data-student-name]").textContent = student.name;
       document.querySelector("[data-student-avatar]").textContent = initials(student.name);
-      document.querySelector("[data-student-group]").textContent = `Turma: ${student.group}`;
+      document.querySelector("[data-student-group]").textContent = `Turma: ${student.group || "a definir"}`;
       document.querySelector("[data-welcome]").textContent = `Bem-vinda, ${student.name.split(" ")[0]}. Aqui fica sua rotina de estudos e acompanhamento.`;
-      document.querySelector("[data-plan-name]").textContent = student.plan;
-      document.querySelector("[data-contract-pill]").textContent = `Contrato ${student.plan.toLowerCase()} ativo`;
+      document.querySelector("[data-plan-name]").textContent = student.plan || "A definir";
+      document.querySelector("[data-contract-pill]").textContent = student.plan ? `Contrato ${student.plan.toLowerCase()} ativo` : "Contrato a definir";
+      renderPortalHomeworks(student.email);
       loginScreen.classList.add("hidden");
       portalApp.classList.remove("hidden");
     }
@@ -836,8 +1058,35 @@
 
     const savedPortalEmail = sessionStorage.getItem("teacherMariaPortalEmail");
     if (savedPortalEmail) {
-      showPortal(findStudentByEmail(savedPortalEmail));
+      const savedStudent = findStudentByEmail(savedPortalEmail);
+      if (savedStudent) {
+        showPortal(savedStudent);
+      } else {
+        sessionStorage.removeItem("teacherMariaPortalEmail");
+      }
     }
+
+    document.querySelector("[data-toggle-password]").addEventListener("click", (event) => {
+      const button = event.currentTarget;
+      const input = button.closest(".password-field").querySelector("input");
+      const shouldShow = input.type === "password";
+      input.type = shouldShow ? "text" : "password";
+      button.textContent = shouldShow ? "Ocultar" : "Ver";
+    });
+
+    document.querySelector("[data-forgot-password]").addEventListener("click", () => {
+      const email = document.querySelector("[data-login-form] [name='email']").value.trim().toLowerCase();
+      const message = document.querySelector("[data-login-message]");
+      message.classList.add("visible");
+      if (!email) {
+        message.textContent = "Digite seu e-mail para solicitar uma nova senha.";
+        return;
+      }
+      const student = findStudentByEmail(email);
+      message.textContent = student
+        ? "Solicitação registrada. A professora poderá gerar uma nova senha pelo painel."
+        : "Este e-mail ainda não possui um acesso cadastrado.";
+    });
 
     document.querySelectorAll("[data-tab]").forEach((tab) => {
       tab.addEventListener("click", () => {
@@ -987,32 +1236,154 @@
       return slots.length ? slots : fallback;
     }
 
-    function renderPortalSlots() {
-      document.querySelector("[data-slots]").innerHTML = getPortalSlots().map((slot) => `
-        <button class="slot" type="button" data-slot-label="${slot.type} - ${slot.date} às ${slot.time}">
-          ${slot.date}<br>${slot.time}
-        </button>
-      `).join("");
+    function parseSlotDate(value) {
+      const [year, month, day] = value.split("-").map(Number);
+      return new Date(year, month - 1, day);
     }
 
-    renderPortalSlots();
+    function dateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
 
+    function monthLabel(date) {
+      return date.toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
+    }
+
+    function formatDisplayDate(value) {
+      return parseSlotDate(value).toLocaleDateString("pt-BR", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long"
+      });
+    }
+
+    function initialCalendarMonth() {
+      const firstSlot = [...getPortalSlots()].sort((a, b) => a.date.localeCompare(b.date))[0];
+      const base = firstSlot ? parseSlotDate(firstSlot.date) : new Date();
+      return new Date(base.getFullYear(), base.getMonth(), 1);
+    }
+
+    let portalCalendarDate = initialCalendarMonth();
+    let selectedDate = "";
     let selectedSlot = "";
     const confirmSlotButton = document.querySelector("[data-confirm-slot]");
 
-    document.querySelector("[data-slots]").addEventListener("click", (event) => {
-      const slot = event.target.closest(".slot");
+    function slotsByDate(value) {
+      return getPortalSlots()
+        .filter((slot) => slot.date === value)
+        .sort((a, b) => a.time.localeCompare(b.time));
+    }
+
+    function renderDaySlots(value) {
+      const daySlots = slotsByDate(value);
+      selectedSlot = "";
+      confirmSlotButton.disabled = true;
+
+      if (!daySlots.length) {
+        document.querySelector("[data-day-slots]").innerHTML = `
+          <h3>${formatDisplayDate(value)}</h3>
+          <p>Não há horários disponíveis nesse dia.</p>
+        `;
+        document.querySelector("[data-status]").textContent = "Escolha um dia com horário disponível.";
+        return;
+      }
+
+      document.querySelector("[data-day-slots]").innerHTML = `
+        <h3>${formatDisplayDate(value)}</h3>
+        ${daySlots.map((slot) => `
+          <button class="slot-choice" type="button" data-slot-label="${slot.type} - ${slot.date} às ${slot.time}">
+            <span>${slot.time} - ${slot.type}</span>
+            <small>${slot.capacity || 1} vaga(s)</small>
+          </button>
+        `).join("")}
+      `;
+      document.querySelector("[data-status]").textContent = "Agora escolha um horário para confirmar a solicitação.";
+    }
+
+    function renderPortalCalendar() {
+      const year = portalCalendarDate.getFullYear();
+      const month = portalCalendarDate.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const gridStart = new Date(year, month, 1 - firstDay.getDay());
+      const slots = getPortalSlots();
+
+      document.querySelector("[data-calendar-label]").textContent = monthLabel(portalCalendarDate);
+      document.querySelector("[data-calendar]").innerHTML = Array.from({ length: 42 }, (_, index) => {
+        const day = new Date(gridStart);
+        day.setDate(gridStart.getDate() + index);
+        const key = dateKey(day);
+        const daySlots = slots.filter((slot) => slot.date === key).sort((a, b) => a.time.localeCompare(b.time));
+        const isCurrentMonth = day.getMonth() === month;
+        const isSelected = selectedDate === key;
+        return `
+          <button class="calendar-day ${isCurrentMonth ? "" : "muted"} ${daySlots.length ? "has-slots" : ""} ${isSelected ? "selected" : ""}" type="button" data-calendar-date="${key}">
+            <strong>${day.getDate()}</strong>
+            ${daySlots.length
+              ? daySlots.slice(0, 3).map((slot) => `<span class="slot-chip">${slot.time}</span>`).join("")
+              : "<small>Sem horário</small>"}
+          </button>
+        `;
+      }).join("");
+    }
+
+    renderPortalCalendar();
+
+    document.querySelector("[data-calendar]").addEventListener("click", (event) => {
+      const day = event.target.closest("[data-calendar-date]");
+      if (!day) return;
+      selectedDate = day.dataset.calendarDate;
+      renderPortalCalendar();
+      renderDaySlots(selectedDate);
+    });
+
+    document.querySelector("[data-day-slots]").addEventListener("click", (event) => {
+      const slot = event.target.closest("[data-slot-label]");
       if (!slot) return;
-      document.querySelectorAll(".slot").forEach((item) => item.classList.remove("selected"));
+      document.querySelectorAll(".slot-choice").forEach((item) => item.classList.remove("selected"));
       slot.classList.add("selected");
       selectedSlot = slot.dataset.slotLabel;
       confirmSlotButton.disabled = false;
       document.querySelector("[data-status]").textContent = `Horário selecionado: ${selectedSlot}. Confirme para enviar a solicitação.`;
     });
 
+    document.querySelector("[data-calendar-prev]").addEventListener("click", () => {
+      portalCalendarDate = new Date(portalCalendarDate.getFullYear(), portalCalendarDate.getMonth() - 1, 1);
+      renderPortalCalendar();
+    });
+
+    document.querySelector("[data-calendar-next]").addEventListener("click", () => {
+      portalCalendarDate = new Date(portalCalendarDate.getFullYear(), portalCalendarDate.getMonth() + 1, 1);
+      renderPortalCalendar();
+    });
+
+    document.querySelector("[data-calendar-today]").addEventListener("click", () => {
+      const today = new Date();
+      portalCalendarDate = new Date(today.getFullYear(), today.getMonth(), 1);
+      selectedDate = dateKey(today);
+      renderPortalCalendar();
+      renderDaySlots(selectedDate);
+    });
+
+    const slotDialog = document.querySelector("[data-slot-dialog]");
+
     confirmSlotButton.addEventListener("click", () => {
+      if (!selectedSlot) return;
+      document.querySelector("[data-slot-dialog-text]").textContent = `Você tem certeza de que deseja confirmar ${selectedSlot}?`;
+      slotDialog.showModal();
+    });
+
+    document.querySelector("[data-cancel-slot]").addEventListener("click", () => {
+      slotDialog.close();
+    });
+
+    document.querySelector("[data-final-confirm-slot]").addEventListener("click", () => {
+      if (!selectedSlot) return;
       document.querySelector("[data-status]").textContent = `Solicitação confirmada para ${selectedSlot}. A professora te responderá em até 48 horas.`;
       confirmSlotButton.disabled = true;
+      slotDialog.close();
     });
 
     document.querySelector("[data-pay]").addEventListener("click", () => {
